@@ -1,0 +1,75 @@
+﻿@page "/interests"
+@using Essiq.Showroom.Server.Client
+@using Essiq.Showroom.Client.Services
+@inject IClientConsultantInterestsClient ClientConsultantInterestsClient
+@inject NavigationManager NavigationManager
+@inject IJSHelpers JSHelpers
+@using Essiq.Showroom.Shared
+@attribute [Authorize]
+
+<Loader Task="@task">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Interests</h2>
+    </div>
+
+    <TableView Items="interests.AsReadOnly()"
+               TItem="ClientConsultantInterest">
+        <TableHeader>
+            <th>Date</th>
+            <th>Consultant</th>
+            <th>Client</th>
+            <th>Message</th>
+            <th></th>
+        </TableHeader>
+        <RowTemplate Context="interest">
+            <td>@interest.Date.ToString("yyyy/MM/dd hh:mm")</td>
+            <td><NameDisplay FirstName="@interest.Consultant.FirstName" LastName="@interest.Consultant.LastName" DisplayName="@interest.Consultant.DisplayName" /></td>
+            <td><NameDisplay FirstName="@interest.Client.FirstName" LastName="@interest.Client.LastName" DisplayName="@interest.Client.DisplayName" /></td>
+            <td>@interest.Message</td>
+            <td>
+                @*<a href="/consultants/@consultant.Id" @onclick:stopPropagation><span class="oi oi-magnifying-glass" aria-hidden="true"></span></a> *@
+                <a @onclick="@(() => RevokeInterest(interest))"><span class="oi oi-delete" aria-hidden="true"></span></a>
+            </td>
+        </RowTemplate>
+    </TableView>
+</Loader>
+
+@code {
+    private List<ClientConsultantInterest> interests;
+    private Task task;
+
+    protected override void OnInitialized()
+    {
+        task = OnInitialize();
+    }
+
+    private async Task OnInitialize()
+    {
+        try
+        {
+            interests = (await ClientConsultantInterestsClient.GetInterestsAsync()).ToList();
+        }
+        /*catch (ApiException exc)
+        {
+
+        }
+        catch (HttpRequestException exc)
+        {
+
+        }*/
+        catch (Exception exc)
+        {
+            await JSHelpers.Alert(exc.Message);
+        }
+    }
+
+    private async Task RevokeInterest(ClientConsultantInterest interest)
+    {
+        if(await JSHelpers.Confirm("Are you sure that you want to revoke the interest?"))
+        {
+            await ClientConsultantInterestsClient.RevokeInterestAsync(interest.Consultant.Id);
+            interests.Remove(interest);
+        }
+    }
+}
+

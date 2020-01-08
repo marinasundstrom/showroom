@@ -1,0 +1,166 @@
+﻿@page "/managers/add"
+@page "/managers/edit/{Id}"
+@layout MainLayout
+@using Essiq.Showroom.Shared
+@attribute [Authorize(Roles = RoleConstants.AdministratorAndManager)]
+
+<Loader Task="task">
+    <FilePickerModal @ref="imageUploadModal" OnConfirm="SubmitProfileImageForm" ConfirmButtonText="Upload" Accept="image/*">
+        <TitleTemplate>
+            Upload profile image for <NameDisplay FirstName="@manager.FirstName" DisplayName="@manager.DisplayName" ShowFirstName="true" />
+        </TitleTemplate>
+    </FilePickerModal>
+
+    @*<FilePickerModal @ref="videoUploadModal" OnConfirm="SubmitVideoForm" ConfirmButtonText="Upload" Accept="video/*">
+        <TitleTemplate>
+            Upload video for <NameDisplay FirstName="@manager.FirstName" DisplayName="@manager.DisplayName" ShowFirstName="true" />
+        </TitleTemplate>
+    </FilePickerModal>*@
+
+    <section class="jumbotron text-center">
+        <div class="container">
+
+            @if (string.IsNullOrEmpty(Id))
+            {
+                <h1 class="jumbotron-heading">
+                    Add Manager
+                </h1>
+            }
+            else
+            {
+                <ProfileImage ImagePath="@(imageSource == null ? manager.ProfileImage : imageSource)"
+                              FirstName="@manager.FirstName"
+                              LastName="@manager.LastName" OnClick="@(() => imageUploadModal.Show())">
+                    <Overlay>
+                        <i class="overlay oi oi-pencil"></i>
+                    </Overlay>
+                </ProfileImage>
+
+                <h1 class="jumbotron-heading">
+                    <NameDisplay FirstName="@manager.FirstName"
+                                 MiddleName="@manager.MiddleName"
+                                 LastName="@manager.LastName"
+                                 DisplayName="@manager.DisplayName" />
+                </h1>
+
+                @if (!string.IsNullOrEmpty(manager.Headline))
+                {
+                    <p class="lead text-muted">@manager.Headline</p>
+                }
+            }
+
+        </div>
+    </section>
+
+    <div class="py-5 bg-light">
+        <div class="container">
+            <EditForm Model="@manager" OnValidSubmit="@SubmitForm">
+                <DataAnnotationsValidator />
+                <h3>Personal Information</h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <InputText2 class="form-control" placeholder="First Name" @bind-Value="manager.FirstName"></InputText2>
+                        <ValidationMessage For="@(() => manager.FirstName)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <InputText2 class="form-control" placeholder="Last Name" @bind-Value="manager.LastName"></InputText2>
+                        <ValidationMessage For="@(() => manager.LastName)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="displayName">Display name</label>
+                        <InputText2 class="form-control" placeholder="Display Name" @bind-Value="manager.DisplayName"></InputText2>
+                        <ValidationMessage For="@(() => manager.DisplayName)"></ValidationMessage>
+                    </div>
+                </div>
+
+                @if (userProfile.Organization == null)
+                {
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="organization">Organization</label>
+                            <InputSelect2 class="form-control" @bind-Value="manager.OrganizationId">
+                                <option value="">Select an Organization...</option>
+                                @if (organizations != null)
+                                    {
+                                    @foreach (var organization in organizations)
+                                        {
+                                        <option value="@organization.Id">@organization.Name</option>
+                                        }
+                                    /**/
+                                    }
+                                /**/
+                            </InputSelect2>
+                            <ValidationMessage For="@(() => manager.OrganizationId)"></ValidationMessage>
+                        </div>
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label for="headline">Headline <span class="text-muted">(Optional)</span></label>
+                    <InputText2 class="form-control" placeholder="Headline" @bind-Value="manager.Headline"></InputText2>
+                    <ValidationMessage For="@(() => manager.Headline)"></ValidationMessage>
+                </div>
+
+                <div class="mb-3">
+                    <label for="shortPresentation">Short Presentation <span class="text-muted">(Optional)</span></label>
+                    <InputTextArea class="form-control" placeholder="Short Presentation" @bind-Value="manager.ShortPresentation"></InputTextArea>
+                    <ValidationMessage For="@(() => manager.ShortPresentation)"></ValidationMessage>
+                </div>
+
+                <div class="mb-3">
+                    <label for="presentation">Presentation <span class="text-muted">(Optional)</span></label>
+                    <InputMarkdownEditor class="form-control" placeholder="Presentation" @bind-Value="manager.Presentation"></InputMarkdownEditor>
+                    <ValidationMessage For="@(() => manager.Presentation)"></ValidationMessage>
+                </div>
+
+                <h3>Contact Information</h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email">E-mail</label>
+                        <InputText class="form-control" placeholder="Email" @bind-Value="manager.Email"></InputText>
+                        <ValidationMessage For="@(() => manager.Email)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="phoneNo">Phone No</label>
+                        <InputText class="form-control" placeholder="Phone No" @bind-Value="manager.PhoneNumber"></InputText>
+                        <ValidationMessage For="@(() => manager.PhoneNumber)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <h4>Address</h4>
+
+                <AddressForm Address="@manager.Address"></AddressForm>
+
+                <hr class="mb-4">
+                <button class="btn btn-primary" type="submit">Save</button>
+
+                @if (saved)
+                {
+                    <p><span class="oi oi-check" aria-hidden="true"></span> Saved</p>
+                }
+                else
+                {
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <p><span class="oi oi-ban" aria-hidden="true"></span> @error</p>
+                    }
+                }
+            </EditForm>
+        </div>
+    </div>
+</Loader>
+
+@code {
+    FilePickerModal videoUploadModal;
+    FilePickerModal imageUploadModal;
+}

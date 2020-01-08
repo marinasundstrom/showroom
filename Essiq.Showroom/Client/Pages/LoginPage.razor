@@ -1,0 +1,67 @@
+﻿@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using Essiq.Showroom.Server.Client
+@using Essiq.Showroom.Client.Utils
+@using Essiq.Showroom.Client.Services
+@using System.Text.Json
+@inject NavigationManager NavigationManager
+@inject IIdentityService IdentityService
+@inject IJSHelpers JSHelpers
+@layout BaseLayout
+
+<EditForm Model="@credentials" OnValidSubmit="@SubmitCredentials" class="form-signin animated fadeIn faster">
+
+    <div class="text-center mb-4">
+        <img src="/images/Essiq-Pos-Logo-Small.png" class="logo"><h1 class="h3 mb-3 font-weight-normal">Welcome!</h1>
+    </div>
+
+    <DataAnnotationsValidator />
+    <label for="Email" class="sr-only">Email</label>
+    <InputText class="form-control" placeholder="Email address" @bind-Value="@credentials.Email"></InputText>
+    <ValidationMessage For="@(() => credentials.Email)"></ValidationMessage>
+    <label for="Password" class="sr-only">Password</label>
+    <input type="password" class="form-control" placeholder="Password" @bind="@credentials.Password" />
+    <ValidationMessage For="@(() => credentials.Password)"></ValidationMessage>
+
+    <button type="submit" class="btn btn-lg btn-primary btn-block"><i class="oi oi-account-login"></i> Log in</button>
+
+    <p class="mt-5 mb-3 text-muted text-center">&copy; @DateTime.Now.Year ESSIQ Syd</p>
+
+</EditForm>
+
+@code {
+    FormCredentials credentials = new FormCredentials();
+
+    async Task SubmitCredentials()
+    {
+        try
+        {
+            await IdentityService.LoginAsync(credentials.Email, credentials.Password);
+
+            NavigationManager.NavigateTo("/");
+        }
+        catch (ApiException<ProblemDetails> exc)
+        {
+            await JSHelpers.Alert(exc.Result.Detail);
+        }
+        /* catch (HttpRequestException exc)
+        {
+            await JSHelpers.Alert(JsonSerializer.Serialize(exc.ToString()));
+        }*/
+        catch (Exception exc)
+        {
+            await JSHelpers.Alert(exc.Message);
+        }
+    }
+
+    class FormCredentials
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
+}

@@ -1,0 +1,37 @@
+﻿$font-path: './' !default;
+
+@font-face {
+    font-family: 'San Francisco';
+    src: url("#{$font-path}SanFranciscoText-Regular.OTF");
+}
+
+@font-face {
+    font-family: 'San Francisco';
+    font-weight: normal;
+    src: url("#{$font-path}SanFranciscoText-Regular.OTF");
+}
+
+@font-face {
+    font-family: 'San Francisco';
+    font-weight: bold;
+    src: url("#{$font-path}SanFranciscoText-Semibold.otf");
+}
+
+@font-face {
+    font-family: 'Futura';
+    font-weight: normal;
+    src: url("#{$font-path}Futura-Medium.ttf");
+}
+
+@font-face {
+    font-family: 'Futura';
+    font-weight: normal;
+    font-style: italic;
+    src: url("#{$font-path}Futura-MediumItalic.ttf");
+}
+
+@font-face {
+    font-family: 'Futura';
+    font-weight: bold;
+    src: url("#{$font-path}Futura-Bold.ttf");
+}

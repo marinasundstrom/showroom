@@ -1,0 +1,37 @@
+﻿@typeparam TItem
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>@TableHeader</tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                <tr style="cursor: pointer" @onclick="@(async () => await OnRowClicked.InvokeAsync(item))">
+                    @RowTemplate(item)
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>@TableFooter</tr>
+        </tfoot>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment TableHeader { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> RowTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment TableFooter { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<TItem> Items { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem> OnRowClicked { get; set; }
+}

@@ -1,0 +1,70 @@
+﻿@page "/clients"
+@using Essiq.Showroom.Server.Client
+@using Essiq.Showroom.Client.Services
+@inject IClientProfilesClient ClientProfilesClient
+@inject IJSHelpers JSHelpers
+@inject NavigationManager NavigationManager
+@using Essiq.Showroom.Shared
+@attribute [Authorize(Roles = RoleConstants.AdministratorAndManager)]
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2>Clients</h2>
+</div>
+
+<a class="btn btn-primary" href="/clients/add"><span class="oi oi-plus" aria-hidden="true"></span> Add</a>
+
+<Loader Task="@task">
+    <TableView Items="clients" 
+               TItem="ClientProfile" 
+               OnRowClicked="@(item => NavigationManager.NavigateTo($"/clients/edit/{item.Id}"))">
+        <TableHeader>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Display Name</th>
+            <th>Company</th>
+            <th>City</th>
+            <th>Country</th>
+            <th></th>
+        </TableHeader>
+        <RowTemplate Context="client">
+            <td>@client.FirstName</td>
+            <td>@client.LastName</td>
+            <td>@client.DisplayName</td>
+            <td>@client.Company</td>
+            <td>@client?.Address?.City</td>
+            <td>@client?.Address?.Country</td>
+            <td>
+                <a href="/clients/edit/@client.Id" @onclick:stopPropagation><span class="oi oi-pencil" aria-hidden="true"></span></a>
+            </td>
+        </RowTemplate>
+    </TableView>
+</Loader>
+
+@code {
+    private Task task;
+    private IReadOnlyList<ClientProfile> clients;
+
+    protected override void OnInitialized()
+    {
+        task = OnInitialize();
+    }
+    
+    protected async Task OnInitialize()
+    {
+        try
+        {
+            clients = (await ClientProfilesClient.GetClientProfilesAsync(null)).ToList().AsReadOnly();
+        }
+        /* catch (ApiException exc)
+        {
+        }
+        catch (HttpRequestException exc)
+        {
+        } */
+        catch (Exception exc)
+        {
+            await JSHelpers.Alert(exc.Message);
+        }
+    }
+}
+

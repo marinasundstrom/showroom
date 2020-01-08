@@ -1,0 +1,36 @@
+﻿@using Essiq.Showroom.Server.Client
+
+<div class="row">
+    <div class="col-md mb-3">
+        <label for="address">Street</label>
+        <InputText class="form-control" placeholder="Street" @bind-Value="Address.Address1"></InputText>
+        <ValidationMessage For="@(() => this.Address.Address1)"></ValidationMessage>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="postalCode">Postal Code</label>
+        <InputText class="form-control" placeholder="Postal Code" @bind-Value="Address.PostalCode"></InputText>
+        <ValidationMessage For="@(() => this.Address.PostalCode)"></ValidationMessage>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="city">City</label>
+        <InputText class="form-control" placeholder="City" @bind-Value="Address.City"></InputText>
+        <ValidationMessage For="@(() => this.Address.City)"></ValidationMessage>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="state">State</label>
+        <InputText class="form-control" placeholder="State" @bind-Value="Address.State"></InputText>
+        <ValidationMessage For="@(() => this.Address.State)"></ValidationMessage>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="country">Country</label>
+        <InputText class="form-control" placeholder="Country" @bind-Value="Address.Country"></InputText>
+        <ValidationMessage For="@(() => this.Address.Country)"></ValidationMessage>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Address Address { get; set; }
+}

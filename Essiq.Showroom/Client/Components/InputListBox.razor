@@ -1,0 +1,35 @@
+﻿@inherits InputBase<TValue>
+@typeparam TValue
+
+<ListBox TValue="TValue"
+         @ref="listBox"
+         @attributes="@AdditionalAttributes"
+         @bind-SelectedItem="CurrentValue"
+         Query="Query"
+         IsEditable="@IsEditable"
+         Items="@Items"
+         ItemTemplate="ItemTemplate"
+></ListBox>
+
+@code {
+    ListBox<TValue> listBox;
+
+    [Parameter]
+    public IReadOnlyList<TValue> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment<TValue> ItemTemplate { get; set; }
+
+    [Parameter]
+    public bool IsEditable { get; set; }
+  
+    [Parameter]
+    public Func<string, IEnumerable<TValue>, Task<IEnumerable<TValue>>> Query { get; set; }
+
+    protected override bool TryParseValueFromString(string value, out TValue result, out string validationErrorMessage)
+    {
+        result = listBox.Items.FirstOrDefault(x => Object.Equals(x, value));
+        validationErrorMessage = null;
+        return true;
+    }
+}

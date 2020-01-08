@@ -1,0 +1,49 @@
+﻿@page "/settings"
+@attribute [Authorize]
+@using Essiq.Showroom.Server.Client
+@using Essiq.Showroom.Client.Services
+@inject IUserClient userClient
+@inject IIdentityService IdentityService
+
+<MessageModal @ref="deletionConfirmationModal" Title="Account deleted" ButtonText="OK" OnClose="LogOut">
+    <p>Your account has been successfuly deleted.</p>
+    <p>You will now be logged out.</p>
+</MessageModal>
+
+<ConfirmModal @ref="deleteModal" Title="Delete account" ConfirmButtonText="Yes" CancelButtonText="No" OnConfirm="@(async () => await ConfirmDelete())">
+    <p>You are about to delete your account.</p>
+    <p>Are you sure?</p>
+</ConfirmModal>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2>Settings</h2>
+</div>
+
+<a class="btn btn-secondary" href="/user/changepassword"><span class="oi oi-key" aria-hidden="true"></span> Change Password</a>
+<a class="btn btn-secondary" @onclick="@(() => deleteModal.Show())"><span class="oi oi-delete" aria-hidden="true"></span> Delete account</a>
+
+@code {
+    ConfirmModal deleteModal;
+    MessageModal deletionConfirmationModal;
+
+    async Task ConfirmDelete()
+    {
+        try
+        {
+            await userClient.DeleteUserProfileAsync();
+
+            await deleteModal.Close();
+
+            await deletionConfirmationModal.Show();
+        }
+        catch (Exception)
+        {
+            //Something went wrong
+        }
+    }
+
+    async Task LogOut()
+    {
+        await IdentityService.LogoutAsync();
+    }
+}

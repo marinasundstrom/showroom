@@ -1,0 +1,45 @@
+﻿@typeparam TValue
+@implements IAsyncDisposable
+@using Microsoft.Extensions.Logging
+@inject ILogger<ListBox<TValue>> Logger
+
+<div class="listbox" @ref="listBox">
+    <input type="hidden" value="@selectedItemInternal" />
+    <a class="listbox-button" @onclick="ToggleList"><span class="oi oi-chevron-bottom"></span></a>
+    <input @ref="inputRef"
+           @attributes="@AdditionalAttributes"
+           type="text"
+           class="form-control @(isInvalid ? "is-invalid" : string.Empty)"
+           value="@inputValue"
+           placeholder="@Placeholder"
+           @oninput="OnInput"
+           @onfocus="OnFocus"
+           @onkeydown="OnKeyPress"
+           @onkeydown:stopPropagation
+           readonly=@(!IsEditable)>
+    @if (IsOpen)
+    {
+        <div @ref="menuDiv" class="listbox-menu">
+            @if (focusedList != null)
+            {
+                @foreach (var item in focusedList)
+                {
+                    <div class="listbox-item @(Object.Equals(item, selectedItemInternal) ? "focused" : string.Empty)"
+                         @onclick="@(async _ => await OnItemClick(item))"
+                         @onclick:preventDefault>
+
+                        @if (ItemTemplate != null)
+                        {
+                            @ItemTemplate(item);
+                        }
+                        else
+                        {
+                            @item
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+
+</div>

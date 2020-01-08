@@ -1,0 +1,77 @@
+﻿<Modal @ref="modal" OnShow="OnShow" OnClose="OnClose">
+    <ModalHeader>
+        <h5 class="modal-title"> 
+        @if (TitleTemplate != null)
+        {
+            @TitleTemplate
+        }
+        else
+        {
+            @Title
+        }
+        </h5>
+        <button type="button" class="close" @onclick="modal.Close">×</button>
+    </ModalHeader>
+    <ModalBody>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>@Label</label>
+                <InputFile OnChange="HandleFileSelected" accept="@Accept" />
+            </div>
+        </div>
+    </ModalBody>
+    <ModalFooter>
+        <button class="btn btn-primary" type="button" @onclick="@(async () =>
+                                                                  {
+                                                                      await OnConfirm.InvokeAsync(file);
+                                                                      await modal.Close();
+                                                                  })" disabled="@(file == null)">@ConfirmButtonText</button>
+    </ModalFooter>
+</Modal>
+
+@code {
+    Modal modal;
+    IFileListEntry file;
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment TitleTemplate { get; set; }
+
+    [Parameter]
+    public string ConfirmButtonText { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Select a file";
+
+    [Parameter]
+    public string Accept { get; set; }
+
+    [Parameter]
+    public EventCallback<IFileListEntry> OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnShow { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    void HandleFileSelected(IFileListEntry[] files)
+    {
+        file = files.FirstOrDefault();
+        StateHasChanged();
+    }
+
+    public Task Show()
+    {
+        return modal.Show();
+    }
+
+    public Task Close()
+    {
+        return modal.Close();
+    }
+}
+
+

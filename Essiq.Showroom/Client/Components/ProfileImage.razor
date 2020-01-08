@@ -1,0 +1,30 @@
+﻿@if (!string.IsNullOrEmpty(ImagePath))
+{
+    <div class="img-circle" style="background-image: url('@ImagePath')" @onclick="OnClick">
+        @Overlay
+    </div>
+}
+else
+{
+<div class="img-circle" @onclick="OnClick">
+    @Overlay
+    @($"{char.ToUpper(FirstName.First())}{char.ToUpper(LastName.First())}")
+</div>
+}
+
+@code {
+    [Parameter]
+    public string ImagePath { get; set; }
+
+    [Parameter]
+    public string FirstName { get; set; }
+
+    [Parameter]
+    public string LastName { get; set; }
+
+    [Parameter]
+    public RenderFragment Overlay { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

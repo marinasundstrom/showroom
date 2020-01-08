@@ -1,0 +1,84 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <DefaultItemExcludes>${DefaultItemExcludes};dist\**;node_modules\**</DefaultItemExcludes>
+    <NoWarn>CS2008</NoWarn>
+
+    <!--VS's FastUpToDateCheck doesn't consider .ts file changes, so it's necessary to disable it to get incremental builds to work correctly (albeit not as fast as if FastUpToDateCheck did work for them)-->
+
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>  
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.8.0-beta">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".npmignore" />
+    <Content Include="LICENSE">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="CHANGELOG" />
+    <Content Include="NOTICE" />
+    <Content Include="README" />
+    <Content Include="scripts\index.ts">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="webpack.config.js" />
+    <Content Include="fonts\fonts.scss" />
+    <Content Include="fonts\Futura-Bold.ttf" />
+    <Content Include="fonts\Futura-CondensedExtraBold.ttf" />
+    <Content Include="fonts\Futura-CondensedMedium.ttf" />
+    <Content Include="fonts\Futura-Medium.ttf" />
+    <Content Include="fonts\Futura-MediumItalic.ttf" />
+    <Content Include="fonts\SanFranciscoText-Bold.otf" />
+    <Content Include="fonts\SanFranciscoText-BoldItalic.otf" />
+    <Content Include="fonts\SanFranciscoText-Heavy.otf" />
+    <Content Include="fonts\SanFranciscoText-HeavyItalic.otf" />
+    <Content Include="fonts\SanFranciscoText-Light.otf" />
+    <Content Include="fonts\SanFranciscoText-LightItalic.otf" />
+    <Content Include="fonts\SanFranciscoText-Medium.otf" />
+    <Content Include="fonts\SanFranciscoText-MediumItalic.otf" />
+    <Content Include="fonts\SanFranciscoText-Regular.otf" />
+    <Content Include="fonts\SanFranciscoText-RegularItalic.otf" />
+    <Content Include="fonts\SanFranciscoText-Semibold.otf" />
+    <Content Include="fonts\SanFranciscoText-SemiboldItalic.otf" />
+    <Content Include="images\Essiq-Neg-Logo.png" />
+    <Content Include="images\Essiq-Pos-Logo.png" />
+    <Content Include="scss\buttons.scss" />
+    <Content Include="scss\colors.scss" />
+    <Content Include="scss\essiq.scss" />
+    <Content Include="scss\mixins.scss" />
+    <Content Include="scss\typography.scss" />
+    <Content Include="tsconfig.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="fonts\" />
+    <Folder Include="images\" />
+    <Folder Include="scripts\" />
+    <Folder Include="scss\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WebpackInputs Include="**\*.ts; **\*.scss" Exclude="wwwroot\**;node_modules\**; **\*.d.ts" />
+  </ItemGroup>
+  
+  <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec Command="npm install" />
+  </Target>
+
+  <Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="dist\indexedDb.Blazor.js" DependsOnTargets="EnsureNpmRestored">
+    <Exec Command="npm run build:debug" Condition="'$(Configuration)' == 'Debug'" />
+    <Exec Command="npm run build:production" Condition="'$(Configuration)' != 'Debug'" />
+  </Target>
+</Project>

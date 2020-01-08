@@ -1,0 +1,14 @@
+﻿@import "mixins";
+
+$brand-orange: #f15d22;
+$brand-grey: #6d6e71;
+$brand-white: #ffffff;
+$brand-black: #222222;
+
+.brand-gradient-orange {
+    @include linear-gradient($brand-orange, #ff7336);
+}
+
+.brand-gradient-grey {
+    @include linear-gradient(#222222, $brand-grey);
+}

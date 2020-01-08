@@ -1,0 +1,41 @@
+{
+  "name": "@essiq/brand",
+  "version": "0.0.0",
+  "description": "ESSIQ Brand",
+  "main": "index.js",
+  "author": {
+    "name": ""
+  },
+  "scripts": {
+    "build": "npm run build:debug",
+    "build:debug": "webpack --mode=development",
+    "build:production": "webpack --mode=production",
+    "clean": ""
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.4.2",
+    "file-loader": "^5.0.2",
+    "glob": "^7.1.6",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "resolve-url-loader": "^3.1.1",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "open-iconic": "^1.1.1"
+  },
+  "files": [
+    "dist/**/*",
+    "scss/**/*",
+    "images/**/*",
+    "fonts/**/*",
+    "scripts/**/*"
+  ]
+}

@@ -1,0 +1,52 @@
+﻿@page "/organizations/add"
+@page "/organizations/edit/{Id}"
+@using Essiq.Showroom.Shared
+@attribute [Authorize(Roles = RoleConstants.Administrator)]
+
+<Loader Task="@task">
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+        @if (string.IsNullOrEmpty(Id))
+        {
+            <h2>Add Organization</h2>
+        }
+        else
+        {
+            <h2>Edit Organization</h2>
+        }
+    </div>
+
+
+    <EditForm Model="@organization" OnValidSubmit="@SubmitForm">
+        <DataAnnotationsValidator />
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="firstName">Name</label>
+                <InputText class="form-control" placeholder="Name" @bind-Value="organization.Name"></InputText>
+                <ValidationMessage For="@(() => organization.Name)"></ValidationMessage>
+            </div>
+        </div>
+
+        <h4>Address</h4>
+
+        <AddressForm Address="@organization.Address"></AddressForm>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary" type="submit">Save</button>
+
+        @if (saved)
+        {
+            <p><span class="oi oi-check" aria-hidden="true"></span> Saved</p>
+        }
+        else
+        {
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <p><span class="oi oi-ban" aria-hidden="true"></span> @error</p>
+            }
+        }
+    </EditForm>
+
+</Loader>

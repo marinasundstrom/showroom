@@ -1,0 +1,42 @@
+﻿@if (!string.IsNullOrEmpty(DisplayName) && ShowDisplayName)
+{
+    @DisplayName
+}
+else
+{
+    @if (ShowFirstName)
+    {
+        @FirstName
+    }
+    else
+    {
+        @if (!string.IsNullOrEmpty(MiddleName))
+        {
+            @($"{FirstName} {MiddleName} {LastName}")
+        }
+        else
+        {
+            @($"{FirstName} {LastName}")
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public string FirstName { get; set; }
+
+    [Parameter]
+    public string MiddleName { get; set; }
+
+    [Parameter]
+    public string LastName { get; set; }
+
+    [Parameter]
+    public string DisplayName { get; set; }
+
+    [Parameter]
+    public bool ShowDisplayName { get; set; } = true;
+
+    [Parameter]
+    public bool ShowFirstName { get; set; } = false;
+}

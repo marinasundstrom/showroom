@@ -1,0 +1,59 @@
+﻿.btn {
+    text-transform: uppercase;
+    border-radius: 30px;
+    border: 0 !important;
+    padding: 15px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.btn > span:first-child {
+    margin-right: 10px;
+}
+
+.btn > i:first-child {
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: rgba(241, 93, 34, 1) !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: rgba(241, 93, 34, 0.7) !important;
+}
+
+.btn-primary:active {
+    background-color: rgba(241, 93, 34, 1) !important;
+}
+
+.btn-outline-primary {
+    border-color: rgba(241, 93, 34, 1) !important;
+    color: black !important;
+}
+
+.btn-outline-primary:hover {
+    border-color: rgba(241, 93, 34, 0.7) !important;
+}
+
+.btn-outline-primary:active {
+    border-color: rgba(241, 93, 34, 1) !important;
+}
+
+.btn-secondary {
+    background-color: rgba(109, 110, 113, 1);
+    color: white !important;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(109, 110, 113, 0.7);
+    color: white;
+}
+
+.btn-secondary:active {
+    background-color: rgb(85, 86, 86) !important;
+    color: white;
+}

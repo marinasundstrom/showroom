@@ -1,0 +1,39 @@
+﻿@import "~bootstrap-scss/bootstrap.scss";
+
+.listbox {
+    @extend .dropdown;
+}
+
+.listbox > input[readonly] {
+    background-color: white !important;
+}
+
+.listbox > .is-invalid,
+listbox > input:invalid {
+    @extend .is-invalid;
+    background-image: none !important;
+}
+
+.listbox-menu {
+    @extend .dropdown-menu;
+    display: block;
+    padding: 0;
+    width: 100%;
+    overflow: auto;
+    max-height: 400px;
+}
+
+.listbox-item {
+    @extend .dropdown-item;
+    padding: 0.25rem 0.8rem;
+}
+
+.listbox-item.focused {
+    background-color: lightgrey;
+}
+
+.listbox-button {
+    right: 0;
+    position: absolute;
+    margin: 8px;
+}

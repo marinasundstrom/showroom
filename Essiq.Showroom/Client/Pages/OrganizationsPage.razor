@@ -1,0 +1,89 @@
+﻿@page "/organizations"
+@using Essiq.Showroom.Server.Client
+@using Essiq.Showroom.Client.Services
+@inject IOrganizationsClient OrganizationsClient
+@inject NavigationManager NavigationManager
+@inject IJSHelpers JSHelpers
+@using Essiq.Showroom.Shared
+@attribute [Authorize(Roles = RoleConstants.Administrator)]
+
+    <Loader Task="@task">
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h2>Organizations</h2>
+        </div>
+
+        <a class="btn btn-primary" href="/organizations/add"><span class="oi oi-plus" aria-hidden="true"></span> Add</a>
+
+        <TableView Items="organizations.AsReadOnly()" 
+                   TItem="Organization"
+                   OnRowClicked="@(item => NavigationManager.NavigateTo($"/organizations/edit/{item.Id}"))">
+            <TableHeader>
+                <th>Name</th>
+                <th>City</th>
+                <th>Country</th>
+                <th></th>
+            </TableHeader>
+            <RowTemplate Context="organization">
+                    <td>@organization.Name</td>
+                    <td>@organization?.Address?.City</td>
+                    <td>@organization?.Address?.Country</td>
+                    <td>
+                        <a href="/organizations/edit/@organization.Id" @onclick:stopPropagation><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                        <a href="" @onclick="@(() => DeleteItem(organization))" @onclick:stopPropagation><span class="oi oi-trash" aria-hidden="true"></span></a>
+                    </td>
+            </RowTemplate>
+        </TableView>
+
+    </Loader>
+
+@code {
+    private Task task;
+    private List<Organization> organizations;
+
+    protected override void OnInitialized()
+    {
+        task = OnInitialize();
+    }
+
+    private async Task OnInitialize()
+    {
+        try
+        {
+            organizations = (await OrganizationsClient.GetOrganizationsAsync()).ToList();
+        }
+        /* catch (ApiException exc)
+        {
+        }
+        catch (HttpRequestException exc)
+        {
+        } */
+        catch (Exception exc)
+        {
+            await JSHelpers.Alert(exc.Message);
+        }
+    }
+
+    private async Task DeleteItem(Organization organization)
+    {
+        try
+        {
+            if (await JSHelpers.Confirm("Are you sure you want to delete?"))
+            {
+                await OrganizationsClient.DeleteOrganizationAsync(organization.Id);
+                organizations.Remove(organization);
+            }
+        }
+        /* catch (ApiException exc)
+        {
+        }
+        catch (HttpRequestException exc)
+        {
+        } */
+        catch (Exception exc)
+        {
+            await JSHelpers.Alert(exc.Message);
+        }
+    }
+}
+

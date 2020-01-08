@@ -1,0 +1,36 @@
+﻿@if (IsVisible)
+{
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnShow { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    public async Task Show()
+    {
+        IsVisible = true;
+        await OnShow.InvokeAsync(null);
+    }
+
+    public async Task Close()
+    {
+        IsVisible = false;
+        await OnClose.InvokeAsync(null);
+    }
+}

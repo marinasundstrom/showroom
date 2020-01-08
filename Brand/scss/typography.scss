@@ -1,0 +1,70 @@
+﻿@import "../fonts/fonts.scss";
+
+h1 {
+    font-family: 'Futura';
+    font-size: 40pt;
+    line-height: 44pt;
+    text-transform: uppercase;
+    font-weight: bold !important;
+}
+
+h2 {
+    font-family: 'Futura';
+    font-size: 32pt;
+    line-height: 35.5pt;
+    font-weight: bold !important;
+}
+
+h3, h4, h5 {
+    font-family: 'San Francisco';
+    font-weight: bold;
+    font-size: 11pt;
+    line-height: 16pt;
+}
+
+@media (max-width: 575.98px) {
+    h1 {
+        font-size: 25pt;
+    }
+
+    h2 {
+        font-size: 20pt;
+    }
+}
+
+@media (max-width: 767.98px) {
+    h1 {
+        font-size: 25pt;
+    }
+
+    h2 {
+        font-size: 20pt;
+    }
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+}
