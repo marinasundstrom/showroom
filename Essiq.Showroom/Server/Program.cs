@@ -4,6 +4,7 @@ using Essiq.Showroom.Server.Data;
 
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,17 @@ namespace Essiq.Showroom.Server
                 if (env.IsDevelopment())
                 {
                     var context = sp.GetService<ApplicationDbContext>();
+
+                    await context.Database.EnsureCreatedAsync();
+
+                    try
+                    {
+                        await context.Database.MigrateAsync();
+                    }
+                    catch
+                    {
+
+                    }
 
                     await DataSeeder.CreateRolesAndAdminUser(sp, context);
                     DataSeeder.SeedCompetenceAreas(context);
