@@ -28,7 +28,7 @@
     <PackageReference Include="Blazor.Extensions.Logging" Version="1.1.0-preview2" />
     <PackageReference Include="Blazor.Extensions.Storage" Version="1.1.0-preview3" />
     <PackageReference Include="BlazorInputFile" Version="0.1.0-preview-00002" />
-    <PackageReference Include="HtmlSanitizer" Version="5.0.274-beta" />
+    <PackageReference Include="HtmlSanitizer" Version="5.0.372" />
     <PackageReference Include="Markdig" Version="0.18.0" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview1.19508.20" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.1.0-preview1.19508.20" PrivateAssets="all" />
