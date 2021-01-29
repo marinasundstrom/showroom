@@ -1,6 +1,10 @@
 # Showroom
 
-Web portal for presenting consultants to customers.
+Web portal for presenting consultants to customers.  
+
+Containing a branded Blazor Client-side UI and Web API backend.
+
+I was testing different ways of organizing code. One of my influences was Clean Architecture.
 
 ## Development
 
