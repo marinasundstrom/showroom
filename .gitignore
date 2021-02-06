@@ -341,3 +341,4 @@ healthchecksdb
 
 dist
 mydb.db
+.DS_Store

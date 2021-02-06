@@ -11,7 +11,7 @@ I was testing different ways of organizing code. One of my influences was Clean 
 ### Tools
 
 * .NET Core 3.1
-* Node.js 13.7 (or later)
+* Node.js 15.8.0 (or later)
 * Visual Studio 2019 (or later)
 
 ## Instructions
