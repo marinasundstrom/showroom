@@ -31,7 +31,7 @@
 
 @code {
     Modal modal;
-    IFileListEntry file;
+    IBrowserFile file;
 
     [Parameter]
     public string Title { get; set; }
@@ -49,7 +49,7 @@
     public string Accept { get; set; }
 
     [Parameter]
-    public EventCallback<IFileListEntry> OnConfirm { get; set; }
+    public EventCallback<IBrowserFile> OnConfirm { get; set; }
 
     [Parameter]
     public EventCallback OnShow { get; set; }
@@ -57,9 +57,9 @@
     [Parameter]
     public EventCallback OnClose { get; set; }
 
-    void HandleFileSelected(IFileListEntry[] files)
+    private void HandleFileSelected(InputFileChangeEventArgs e)
     {
-        file = files.FirstOrDefault();
+        file = e.File;
         StateHasChanged();
     }
 

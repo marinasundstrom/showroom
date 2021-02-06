@@ -33,7 +33,7 @@ namespace Essiq.Showroom.Client.Services
         public async Task LogoutAsync()
         {
             userProfileLastFetch = DateTime.Now;
-            await tokenAuthenticationStateProvider.SetTokenAsync(null);
+            await tokenAuthenticationStateProvider.ClearTokenAsync();
         }
 
         public async Task<UserProfile> GetUserProfileAsync()

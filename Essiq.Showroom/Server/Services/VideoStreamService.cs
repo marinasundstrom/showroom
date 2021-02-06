@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Essiq.Showroom.Server.Services
@@ -9,7 +10,7 @@ namespace Essiq.Showroom.Server.Services
 
         public VideoStreamService()
         {
-            videoFolderPath = Path.Combine("C:/temp", "videos");
+            videoFolderPath = Path.Combine("../../Assets", "Videos");
         }
 
         public async Task<Stream> GetVideoByName(string name)

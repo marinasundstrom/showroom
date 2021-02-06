@@ -11,7 +11,7 @@ html, body {
     line-height: 16.2pt;
 }
 
-app {
+#app {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -110,7 +110,7 @@ app {
 }
 
 @media (min-width: 768px) {
-    app {
+    #app {
         flex-direction: row;
     }
 

@@ -50,13 +50,6 @@ namespace Essiq.Showroom.Server
             services.AddControllers()
                     .AddNewtonsoftJson();
 
-            services.AddMvc();
-            services.AddResponseCompression(opts =>
-            {
-                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                    new[] { "application/octet-stream" });
-            });
-
             services.AddDbContext<ApplicationDbContext>
                 (options => _ = env.IsDevelopment() ?
                     options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
@@ -128,25 +121,7 @@ namespace Essiq.Showroom.Server
 
             services.AddHttpContextAccessor();
 
-            //services.AddSwaggerDocument();
-
-            services.AddSwaggerDocument(document =>
-            {
-                document.SchemaType = SchemaType.OpenApi3;
-                document.SchemaNameGenerator = new CustomSchemaNameGenerator();
-
-                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
-                });
-
-                document.OperationProcessors.Add(
-                    new AspNetCoreOperationSecurityScopeProcessor("bearer"));
-                //      new OperationSecurityScopeProcessor("bearer"));
-            });
+            services.AddOpenApiDocument();
 
             services.AddScoped<IIdentityService, IdentityService>();
 
@@ -182,7 +157,7 @@ namespace Essiq.Showroom.Server
 
             services.AddAutoMapper((serviceProvider, automapper) =>
             {
-                automapper.UseEntityFrameworkCoreModel<ApplicationDbContext>(serviceProvider);
+                //automapper.UseEntityFrameworkCoreModel<ApplicationDbContext>(serviceProvider);
             },
             typeof(Startup).Assembly);
         }
@@ -190,25 +165,24 @@ namespace Essiq.Showroom.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseResponseCompression();
-
             app.UseResponseCaching();
-
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-#if !API
-                app.UseBlazorDebugging();
-#endif
+                app.UseWebAssemblyDebugging();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
-#if !API
-            app.UseClientSideBlazorFiles<Showroom.Client.Startup>();
-#endif
-            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthentication();
@@ -219,11 +193,9 @@ namespace Essiq.Showroom.Server
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
-#if !API
-                endpoints.MapFallbackToClientSideBlazor<Showroom.Client.Startup>("index.html");
-#endif
-            });
+                endpoints.MapControllers();
+                endpoints.MapFallbackToFile("index.html");
+            });      
         }
     }
 }

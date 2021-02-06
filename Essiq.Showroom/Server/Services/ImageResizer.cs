@@ -39,7 +39,7 @@ namespace Essiq.Showroom.Server.Services
             var destRect = new Rectangle(0, 0, newSize.Width, newSize.Height);
             var destImage = new Bitmap(newSize.Width, newSize.Height);
 
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+            //destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
 
             using (var graphics = Graphics.FromImage(destImage))

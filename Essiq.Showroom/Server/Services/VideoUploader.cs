@@ -9,7 +9,7 @@ namespace Essiq.Showroom.Server.Services
 
         public VideoUploader()
         {
-            videoFolderPath = Path.Combine("C:/temp", "videos");
+            videoFolderPath = Path.Combine("../../Assets", "videos");
 
             if (!Directory.Exists(videoFolderPath))
             {

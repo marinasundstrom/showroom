@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using Blazor.Extensions.Storage.Interfaces;
+using Blazored.LocalStorage;
 
 using Essiq.Showroom.Client.Utils;
 
@@ -8,21 +8,21 @@ namespace Essiq.Showroom.Client
 {
     public sealed class AppContext
     {
-        private readonly ILocalStorage localStorage;
+        private readonly ILocalStorageService localStorage;
 
-        public AppContext(ILocalStorage localStorage)
+        public AppContext(ILocalStorageService localStorage)
         {
             this.localStorage = localStorage;
         }
 
         public async Task<string> GetAuthTokenAsync()
         {
-            return await localStorage.GetItem<string>(Constants.AuthTokenKey);
+            return await localStorage.GetItemAsync<string>(Constants.AuthTokenKey);
         }
 
         public async Task SetAuthTokenAsync(string token)
         {
-            await localStorage.SetItem(Constants.AuthTokenKey, token);
+            await localStorage.SetItemAsync(Constants.AuthTokenKey, token);
         }
     }
 }

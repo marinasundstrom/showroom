@@ -9,7 +9,7 @@ namespace Essiq.Showroom.Server.Services
 
         public ImageService()
         {
-            imageFolderPath = Path.Combine("C:/temp", "images");
+            imageFolderPath = Path.GetFullPath(Path.Combine("../../Assets", "images"));
         }
 
         public async Task<Stream> GetImageByName(string name)

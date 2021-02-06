@@ -9,7 +9,7 @@ namespace Essiq.Showroom.Server.Services
 
         public ImageUploader()
         {
-            imageFolderPath = Path.Combine("C:/temp", "images");
+            imageFolderPath = Path.Combine("../../Assets", "images");
 
             if (!Directory.Exists(imageFolderPath))
             {

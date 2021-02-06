@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using BlazorInputFile;
-
 using Essiq.Showroom.Client.Services;
 using Essiq.Showroom.Server.Client;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Essiq.Showroom.Client.Pages
 {
@@ -159,16 +158,16 @@ namespace Essiq.Showroom.Client.Pages
         private string imageSource;
         private bool videoSaved;
         private string fileName;
-        private MemoryStream stream;
+        private Stream stream;
 
-        private async Task SubmitProfileImageForm(IFileListEntry file)
+        private async Task SubmitProfileImageForm(IBrowserFile file)
         {
             videoSaved = false;
 
             fileName = file.Name;
-            stream = await file.ReadAllAsync();
+            stream = file.OpenReadStream();
 
-            imageSource = Base64ImageEncoder.EncodeImage(stream, file.Type);
+            imageSource = Base64ImageEncoder.EncodeImage(stream, file.ContentType);
 
             try
             {

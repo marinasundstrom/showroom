@@ -1,29 +1,33 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-
-using Blazor.Extensions.Storage.Interfaces;
-
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Essiq.Showroom.Client.Utils
 {
     public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private readonly ILocalStorage _localStorage;
+        private readonly ILocalStorageService _localStorage;
 
-        public TokenAuthenticationStateProvider(ILocalStorage localStorage)
+        public TokenAuthenticationStateProvider(ILocalStorageService localStorage)
         {
             _localStorage = localStorage;
         }
 
         public async Task<string> GetTokenAsync()
         {
-            return await _localStorage.GetItem<string>(Constants.AuthTokenKey);
+            return await _localStorage.GetItemAsync<string>(Constants.AuthTokenKey);
         }
 
         public async Task SetTokenAsync(string token)
         {
-            await _localStorage.SetItem(Constants.AuthTokenKey, token);
+            await _localStorage.SetItemAsync(Constants.AuthTokenKey, token);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
+        public async Task ClearTokenAsync()
+        {
+            await _localStorage.RemoveItemAsync(Constants.AuthTokenKey);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 

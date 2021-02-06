@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Essiq.Showroom.Server
 {
@@ -14,12 +15,12 @@ namespace Essiq.Showroom.Server
     {
         public static async Task Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
                 var sp = scope.ServiceProvider;
 
-                var env = sp.GetService<IHostingEnvironment>();
+                var env = sp.GetService<IWebHostEnvironment>();
                 if (env.IsDevelopment())
                 {
                     var context = sp.GetService<ApplicationDbContext>();
@@ -45,12 +46,11 @@ namespace Essiq.Showroom.Server
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(new ConfigurationBuilder()
-                    .AddCommandLine(args)
-                    .Build())
-                .UseStartup<Startup>()
-                .Build();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
