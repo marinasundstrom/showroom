@@ -4,7 +4,7 @@ Web portal for presenting consultants to customers.
 
 It consists of a frontend built with Blazor (Web Assembly), and a Web API (ASP.NET Core).
 
-**Update:** I have upgraded the frameworks. It now runs on .NET 5 and Node 15.8.
+Watch demo video [here](https://www.youtube.com/watch?v=bRMFgDmwXmM). Screenshots can be found below.
 
 ## Purpose
 
