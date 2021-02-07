@@ -58,7 +58,7 @@ module.exports = (env, args) => ({
     },
     entry: {
         "scripts": glob.sync("./scripts/*.ts"),
-        "styles": glob.sync("./scss/essiq.scss"),
+        "styles": glob.sync("./scss/scss"),
     },
     output: {
         path: path.join(__dirname, '/dist')

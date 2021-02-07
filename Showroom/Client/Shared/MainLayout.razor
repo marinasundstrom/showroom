@@ -1,0 +1,20 @@
+﻿@inherits LayoutComponentBase
+@inject Showroom.Client.Services.IJSHelpers JSHelpers
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    @Body
+    
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a class="btn" href="#" @onclick="@(async () => await JSHelpers.ScrollToTop())" @onclick:preventDefault><span class="oi oi-chevron-top"></span> Back to top</a>
+            </p>
+            <p>Copyright © ESSIQ AB @DateTime.Now.Year</p>    
+        </div>
+    </footer>
+</div>
+

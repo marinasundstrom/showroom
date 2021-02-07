@@ -1,0 +1,83 @@
+﻿@page "/presentations"
+@layout MainLayout
+@using Showroom.Server.Client
+@using Showroom.Client.Services
+@inject IUserClient UserClient
+@inject IConsultantProfilesClient ConsultantProfilesClient
+@inject IConsultantRecommendationsClient ConsultantRecommendationsClient
+@inject NavigationManager NavigationManager
+@inject IJSHelpers JSHelpers
+@using Showroom.Shared
+@attribute [Authorize]
+
+<Loader Task="@task">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Presentations</h1>
+            <p class="lead text-muted">Consultants we present to you.</p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+
+        <div class="container" style="margin-right: auto; margin-left: auto;">
+            <div class="row">
+                @foreach (var consultantRecommendation in consultantRecommendations)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow animated fadeIn faster">
+                            <div class="card-body">
+                                <h3><NameDisplay FirstName="@consultantRecommendation.Manager.FirstName" LastName="@consultantRecommendation.Manager.LastName" DisplayName="@consultantRecommendation.Manager.DisplayName" /></h3>
+                                <p class="card-text">@consultantRecommendation.Date</p>
+                                <p class="card-text">
+                                    <MarkdownView Content="@consultantRecommendation.Message"></MarkdownView>
+                                </p>
+                                <div style="margin: 10px">
+                                    @*<ConsultantCard Consultant="@consultantRecommendation.Consultant" Href="@($"/consultants/{consultantRecommendation.Consultant.Id}")"></ConsultantCard>*@
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</Loader>
+
+@code {
+    Task task;
+    private IEnumerable<ClientConsultantRecommendation> consultantRecommendations;
+
+    private void OnCardClick(ClientConsultantRecommendation consultantRecommendation)
+    {
+        NavigationManager.NavigateTo($"/consultants/{consultantRecommendation.Consultant.Id}");
+    }
+
+    protected override void OnInitialized()
+    {
+        task = OnInitialize();
+    }
+
+    private async Task OnInitialize()
+    {
+        try
+        {
+            consultantRecommendations = await ConsultantRecommendationsClient.GetConsultantRecommendationsAsync();
+        }
+        /*catch (ApiException exc)
+        {
+
+        }
+        catch (HttpRequestException exc)
+        {
+
+        }*/
+        catch (Exception exc)
+        {
+            await JSHelpers.Alert(exc.Message);
+        }
+    }
+}
+

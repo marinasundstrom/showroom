@@ -1,0 +1,80 @@
+﻿@page "/user/confirm"
+@layout BaseLayout
+@using Showroom.Server.Client
+@using Microsoft.AspNetCore.WebUtilities
+@inject NavigationManager NavigationManager
+@inject IUserClient UserClient
+
+    <div class="main">
+        <div class="content px-4">
+            @if (loaded)
+            {
+                <img src="/images/essiq-logo.png" width="200" />
+
+                @if (error)
+                {
+                    <h3>Something went wrong</h3>
+
+                    <p>Please try again later.</p>
+                    <p>Contact us if the problem persists.</p>
+                }
+                else
+                {
+                    @if (!confirmed)
+                    {
+                        <h3>Confirming E-mail</h3>
+                    }
+                    else
+                    {
+                        <h3>E-mail confirmed succesfully</h3>
+
+                        <a href="/">Continue to login</a>
+                    }
+                }
+            }
+            </div>     
+    </div>
+
+@code {
+    bool loaded = false;
+    bool confirmed = false;
+    bool error = false;
+
+    public string Email { get; set; }
+
+    public string Token { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("email", out var param1))
+        {
+            Email = param1.First();
+        }
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("token", out var param2))
+        {
+            Token = param2.First();
+        }
+
+        if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Token))
+        {
+            try
+            {
+                await UserClient.ConfirmEmailAsync(Email, Token);
+                confirmed = true;
+            }
+            catch
+            {
+                error = true;
+            }
+        }
+        else
+        {
+            error = true;
+        }
+        
+        loaded = true;
+    }
+}

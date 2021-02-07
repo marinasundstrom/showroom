@@ -1,0 +1,208 @@
+﻿@page "/clients/add"
+@page "/clients/edit/{Id}"
+@layout MainLayout
+@using Showroom.Shared
+@attribute [Authorize(Roles = RoleConstants.AdministratorAndManager)]
+
+<Loader Task="@task">
+
+    <FilePickerModal @ref="imageUploadModal" OnConfirm="SubmitProfileImageForm" ConfirmButtonText="Upload" Accept="image/*">
+        <TitleTemplate>
+            Upload profile image for <NameDisplay FirstName="@client.FirstName" DisplayName="@client.DisplayName" ShowFirstName="true" />
+        </TitleTemplate>
+    </FilePickerModal>
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            @if (string.IsNullOrEmpty(Id))
+            {
+                <h1 class="jumbotron-heading">Add Client</h1>
+            }
+            else
+            {
+                <ProfileImage ImagePath="@(imageSource == null ? client.ProfileImage : imageSource)"
+                              FirstName="@client.FirstName"
+                              LastName="@client.LastName" OnClick="@(() => imageUploadModal.Show())">
+                    <Overlay>
+                        <i class="overlay oi oi-pencil"></i>
+                    </Overlay>
+                </ProfileImage>
+
+                <h1 class="jumbotron-heading">
+
+                    <NameDisplay FirstName="@client.FirstName"
+                                 MiddleName="@client.MiddleName"
+                                 LastName="@client.LastName"
+                                 DisplayName="@client.DisplayName" />
+
+                </h1>
+
+                <p class="lead text-muted">
+                    @if (!string.IsNullOrEmpty(client.Title))
+                    {
+                        @client.Title
+                        if (!string.IsNullOrEmpty(client.Section))
+                        {
+                            <span>for @client.Section</span>
+                        }
+                        if (!string.IsNullOrEmpty(client.Department))
+                        {
+                            <span>in @client.Department</span>
+                        }
+                        if (!string.IsNullOrEmpty(client.Company))
+                        {
+                            <span>at @client.Company</span>
+                        }
+                    }
+                </p>}
+        </div>
+    </section>
+
+    <div class="py-5 bg-light">
+        <div class="container">
+            <EditForm Model="@client" OnValidSubmit="@SubmitForm">
+                <DataAnnotationsValidator />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <InputText class="form-control" placeholder="First Name" @bind-Value="client.FirstName"></InputText>
+                        <ValidationMessage For="@(() => client.FirstName)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <InputText class="form-control" placeholder="Last Name" @bind-Value="client.LastName"></InputText>
+                        <ValidationMessage For="@(() => client.LastName)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="displayName">Display Name</label>
+                        <InputText class="form-control" placeholder="Display Name" @bind-Value="client.DisplayName"></InputText>
+                        <ValidationMessage For="@(() => client.DisplayName)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="title">Title</label>
+                        <InputText class="form-control" placeholder="Title" @bind-Value="client.Title"></InputText>
+                        <ValidationMessage For="@(() => client.Title)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="section">Section</label>
+                        <InputText class="form-control" placeholder="Section" @bind-Value="client.Section"></InputText>
+                        <ValidationMessage For="@(() => client.Section)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="department">Department</label>
+                        <InputText class="form-control" placeholder="Department" @bind-Value="client.Department"></InputText>
+                        <ValidationMessage For="@(() => client.Department)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="company">Company</label>
+                        <InputText class="form-control" placeholder="Company" @bind-Value="client.Company"></InputText>
+                        <ValidationMessage For="@(() => client.Company)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <h3>Contact Information</h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email">E-mail</label>
+                        <InputText class="form-control" placeholder="Email" @bind-Value="client.Email"></InputText>
+                        <ValidationMessage For="@(() => client.Email)"></ValidationMessage>
+                    </div>
+                    @*<div class="col-md-6 mb-3">
+                            <button class="btn btn-secondary" @onclick="">Invite</button>
+                        </div>*@
+                </div>
+
+                <div class="row">
+                    <div class="col-md mb-3">
+                        <label for="phoneNo">Phone No</label>
+                        <InputText class="form-control" placeholder="Phone No" @bind-Value="client.PhoneNumber"></InputText>
+                        <ValidationMessage For="@(() => client.PhoneNumber)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <h4>Address</h4>
+
+                <AddressForm Address="@client.Address"></AddressForm>
+
+                <h3>Client Contact</h3>
+
+                <div class="row">
+                    @if (userProfile.Organization == null)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="organization">Client of</label>
+                            <InputSelect2 class="form-control" @bind-Value="client.OrganizationId">
+                                <option value="">Select an Organization...</option>
+                                @if (organizations != null)
+                                    {
+                                    @foreach (var organization in organizations)
+                                        {
+                                        <option value="@organization.Id">@organization.Name</option>
+                                        }
+                                    /**/
+                                    /**/
+                                    /**/
+                                    /**/
+                                    /**/
+                                    /**/
+                                    }
+                                /**/
+                            </InputSelect2>
+                            <ValidationMessage For="@(() => client.OrganizationId)"></ValidationMessage>
+                        </div>
+                    }
+                    <div class="col-md-6 mb-3">
+                        <label for="organization">Our Reference</label>
+                        <InputSelect2 class="form-control" @bind-Value="client.ReferenceId">
+                            <option value="@Guid.Empty">Select a Manager...</option>
+                            @if (managers != null)
+                            {
+                                @foreach (var manager in managers)
+                                {
+                                    <option value="@manager.Id">@manager.FirstName @manager.LastName</option>
+                                }
+                            }
+                        </InputSelect2>
+                        <ValidationMessage For="@(() => client.ReferenceId)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <h3>Notes</h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <InputTextArea class="form-control" @bind-Value="@client.Note"></InputTextArea>
+                        <ValidationMessage For="@(() => client.Note)"></ValidationMessage>
+                    </div>
+                </div>
+
+
+                <button class="btn btn-primary btn-lg" type="submit"><i class="oi oi-check" /> Save</button>
+
+                @if (saved)
+                {
+                    <p><span class="oi oi-check" aria-hidden="true"></span> Saved</p>
+                }
+                else
+                {
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <p><span class="oi oi-ban" aria-hidden="true"></span> @error</p>
+                    }
+                }
+            </EditForm>
+        </div>
+    </div>
+
+</Loader>
+
+
+@code {
+    FilePickerModal videoUploadModal;
+    FilePickerModal imageUploadModal;
+}

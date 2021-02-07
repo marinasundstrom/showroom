@@ -53,7 +53,7 @@
     <Content Include="images\Essiq-Pos-Logo.png" />
     <Content Include="scss\buttons.scss" />
     <Content Include="scss\colors.scss" />
-    <Content Include="scss\essiq.scss" />
+    <Content Include="scss\scss" />
     <Content Include="scss\mixins.scss" />
     <Content Include="scss\typography.scss" />
     <Content Include="tsconfig.json" />

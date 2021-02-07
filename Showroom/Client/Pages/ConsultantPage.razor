@@ -1,0 +1,223 @@
+﻿@page "/consultants/add"
+@page "/consultants/edit/{Id}"
+@layout MainLayout
+@using Showroom.Shared
+@attribute [Authorize(Roles = RoleConstants.AdministratorAndManager)]
+
+<Loader Task="task">
+
+    <FilePickerModal @ref="imageUploadModal" OnConfirm="SubmitProfileImageForm" ConfirmButtonText="Upload" Accept="image/*">
+        <TitleTemplate>
+            Upload profile image for <NameDisplay FirstName="@consultant.FirstName" DisplayName="@consultant.DisplayName" ShowFirstName="true" />
+        </TitleTemplate>
+    </FilePickerModal>
+
+    <FilePickerModal @ref="videoUploadModal" OnConfirm="SubmitVideoForm" ConfirmButtonText="Upload" Accept="video/*">
+        <TitleTemplate>
+            Upload video for <NameDisplay FirstName="@consultant.FirstName" DisplayName="@consultant.DisplayName" ShowFirstName="true" />
+        </TitleTemplate>
+    </FilePickerModal>
+
+    <section class="jumbotron text-center">
+        <div class="container">
+
+            @if (string.IsNullOrEmpty(Id))
+            {
+                <h1 class="jumbotron-heading">
+                    Add Consultant
+                </h1>
+            }
+            else
+            {
+                <ProfileImage ImagePath="@(imageSource == null ? consultant.ProfileImage : imageSource)"
+                            FirstName="@consultant.FirstName"
+                            LastName="@consultant.LastName" OnClick="@(() => imageUploadModal.Show())">
+                    <Overlay>
+                        <i class="overlay oi oi-pencil"></i>
+                    </Overlay>
+                </ProfileImage>
+
+                <h1 class="jumbotron-heading">
+                    <NameDisplay FirstName="@consultant.FirstName"
+                                 MiddleName="@consultant.MiddleName"
+                                 LastName="@consultant.LastName"
+                                 DisplayName="@consultant.DisplayName" />
+                </h1>
+
+                @if (!string.IsNullOrEmpty(consultant.Headline))
+                {
+                    <p class="lead text-muted">@consultant.Headline</p>
+                }
+            }
+
+        </div>
+    </section>
+
+    <div class="py-5 bg-light">
+        <div class="container">
+
+            <EditForm Model="@consultant" OnValidSubmit="@SubmitForm">
+                <DataAnnotationsValidator />
+                <h3>Personal Information</h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <InputText2 class="form-control" placeholder="First Name" @bind-Value="consultant.FirstName"></InputText2>
+                        <ValidationMessage For="@(() => consultant.FirstName)"></ValidationMessage>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <InputText2 class="form-control" placeholder="Last Name" @bind-Value="consultant.LastName"></InputText2>
+                        <ValidationMessage For="@(() => consultant.LastName)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="displayName">Display name</label>
+                        <InputText2 class="form-control" placeholder="Display Name" @bind-Value="consultant.DisplayName"></InputText2>
+                        <ValidationMessage For="@(() => consultant.DisplayName)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="competenceArea">Competence Area</label>
+                        <InputSelect2 class="form-control" @bind-Value="consultant.CompetenceAreaId">
+                            <option value="">Select a Competence Area...</option>
+                            @if (competenceAreas != null)
+                            {
+                                @foreach (var competenceArea in competenceAreas)
+                                {
+                                    <option value="@competenceArea.Id">@competenceArea.Name</option>
+                                }
+                            }
+                        </InputSelect2>
+                        <ValidationMessage For="@(() => consultant.CompetenceAreaId)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @if (userProfile.Organization == null)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <label for="organization">Organization</label>
+                            <InputSelect2 class="form-control" @bind-Value="consultant.OrganizationId">
+                                <option value="">Select an Organization...</option>
+                                @if (organizations != null)
+                                    {
+                                    @foreach (var organization in organizations)
+                                        {
+                                        <option value="@organization.Id">@organization.Name</option>
+                                        }
+                                    }
+                                /**/
+                            </InputSelect2>
+                            <ValidationMessage For="@(() => consultant.OrganizationId)"></ValidationMessage>
+                        </div>
+                    }
+                    <div class="col-md-6 mb-3">
+                        <label for="manager">Manager</label>
+                        <InputSelect2 class="form-control" @bind-Value="consultant.ManagerId">
+                            <option value="@Guid.Empty">Select a Manager...</option>
+                            @if (managers != null)
+                            {
+                                @foreach (var manager in managers)
+                                {
+                                    <option value="@manager.Id">
+                                        <NameDisplay FirstName="@manager.FirstName" LastName="@manager.LastName" DisplayName="@manager.DisplayName" />
+                                    </option>
+                                }
+                            }
+                        </InputSelect2>
+                        <ValidationMessage For="@(() => consultant.ManagerId)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="headline">Headline <span class="text-muted">(Optional)</span></label>
+                    <InputText2 class="form-control" placeholder="Headline" @bind-Value="consultant.Headline"></InputText2>
+                    <ValidationMessage For="@(() => consultant.Headline)"></ValidationMessage>
+                </div>
+
+                <div class="mb-3">
+                    <label for="shortPresentation">Short Presentation <span class="text-muted">(Optional)</span></label>
+                    <InputTextArea class="form-control" placeholder="Short Presentation" @bind-Value="consultant.ShortPresentation"></InputTextArea>
+                    <ValidationMessage For="@(() => consultant.ShortPresentation)"></ValidationMessage>
+                </div>
+
+                <div class="mb-3">
+                    <label for="presentation">Presentation <span class="text-muted">(Optional)</span></label>
+                    <InputMarkdownEditor class="form-control" placeholder="Presentation" @bind-Value="consultant.Presentation"></InputMarkdownEditor>
+                    @*<ValidationMessage For="@(() => consultant.Presentation)"></ValidationMessage>*@
+                </div>
+
+                <div class="mb-3">
+                    <label for="presentation">Available From <span class="text-muted">(Optional)</span></label>
+                    <InputDate class="form-control" placeholder="Available From" @bind-Value="consultant.AvailableFromDate"></InputDate>
+                    <ValidationMessage For="@(() => consultant.AvailableFromDate)"></ValidationMessage>
+                </div>
+
+                <h3>Contact Information</h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email">E-mail</label>
+                        <InputText class="form-control" placeholder="Email" @bind-Value="consultant.Email"></InputText>
+                        <ValidationMessage For="@(() => consultant.Email)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="phoneNo">Phone No</label>
+                        <InputText class="form-control" placeholder="Phone No" @bind-Value="consultant.PhoneNumber"></InputText>
+                        <ValidationMessage For="@(() => consultant.PhoneNumber)"></ValidationMessage>
+                    </div>
+                </div>
+
+                <h4>Address</h4>
+
+                <AddressForm Address="@consultant.Address"></AddressForm>
+
+                <hr class="mb-4">
+
+                <div class="row">
+                    <button class="btn btn-lg btn-primary" type="submit"><i class="oi oi-check" /> Save</button>
+                </div>
+
+                @if (saved)
+                {
+                    <p><span class="oi oi-check" aria-hidden="true"></span> Saved</p>
+                }
+                else
+                {
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <p><span class="oi oi-ban" aria-hidden="true"></span> @error</p>
+                    }
+                }
+            </EditForm>
+
+            @if (!string.IsNullOrEmpty(Id))
+            {
+                <h2>Video</h2>
+
+                if (!string.IsNullOrEmpty(consultant.ProfileVideo))
+                {
+                    <p><b>Current video: </b> @consultant.ProfileVideo</p>
+                }
+
+                <div class="row">
+                    <button class="btn btn-primary" @onclick="@(() => videoUploadModal.Show())">Upload video</button>
+                </div>
+            }
+        </div>
+    </div>
+</Loader>
+
+@code {
+    FilePickerModal videoUploadModal;
+    FilePickerModal imageUploadModal;
+}
