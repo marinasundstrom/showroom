@@ -16,7 +16,7 @@
     <EditForm Model="@presentationForm" OnValidSubmit="@OnPresentSubmit">
         <ModalHeader>
             <h5 class="modal-title">Present <NameDisplay FirstName="@consultantProfile.FirstName" DisplayName="@consultantProfile.DisplayName" ShowFirstName="true" /> to client</h5>
-            <button type="button" class="close" @onclick="recommendationModal.Close">×</button>
+            <button type="button" class="btn close" @onclick="recommendationModal.Close">×</button>
         </ModalHeader>
         <ModalBody>
             <div class="row">
@@ -53,7 +53,7 @@
     <EditForm Model="@interestForm" OnValidSubmit="@OnInterestSubmit">
         <ModalHeader>
             <h5 class="modal-title">Confirm interest in <NameDisplay FirstName="@consultantProfile.FirstName" DisplayName="@consultantProfile.DisplayName" ShowFirstName="true" /></h5>
-            <button type="button" class="close" @onclick="interestModal.Close">×</button>
+            <button type="button" class="btn close" @onclick="interestModal.Close">×</button>
         </ModalHeader>
         <ModalBody>
             <div class="row">

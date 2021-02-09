@@ -16,14 +16,22 @@
     </div>
 
     <DataAnnotationsValidator />
-    <label for="Email" class="sr-only">Email</label>
-    <InputText class="form-control" placeholder="Email address" @bind-Value="@credentials.Email"></InputText>
-    <ValidationMessage For="@(() => credentials.Email)"></ValidationMessage>
-    <label for="Password" class="sr-only">Password</label>
-    <input type="password" class="form-control" placeholder="Password" @bind="@credentials.Password" />
-    <ValidationMessage For="@(() => credentials.Password)"></ValidationMessage>
 
-    <button type="submit" class="btn btn-lg btn-primary btn-block"><i class="oi oi-account-login"></i> Log in</button>
+    <div class="form-floating mb-3">
+        <InputText class="form-control" name="floatingInput" placeholder="name@example.com" @bind-Value="@credentials.Email"></InputText>
+        <label for="floatingInput">Email address</label>
+        <ValidationMessage For="@(() => credentials.Email)"></ValidationMessage>
+    </div>
+
+    <div class="form-floating mb-3">
+        <InputText type="password" name="floatingPassword" class="form-control" placeholder="Password" @bind-Value="@credentials.Password" />
+        <label for="floatingPassword">Password</label>
+        <ValidationMessage For="@(() => credentials.Password)"></ValidationMessage>
+    </div>
+
+    <div class="col text-center">
+        <button type="submit" class="btn btn-lg btn-primary btn-block"><i class="oi oi-account-login"></i> Log in</button>
+    </div>
 
     <p class="mt-5 mb-3 text-muted text-center">&copy; @DateTime.Now.Year ESSIQ Syd</p>
 

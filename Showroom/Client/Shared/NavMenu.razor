@@ -3,12 +3,14 @@
 @inject IIdentityService IdentityService
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">
-        <img src="/images/Essiq-Neg-Logo.png" width="90" />
-    </a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <img src="/images/Essiq-Neg-Logo.png" width="90" />
+        </a>
+        <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">

@@ -1,4 +1,4 @@
-﻿@import "~bootstrap-scss/bootstrap.scss";
+﻿@import "~bootstrap/scss/bootstrap.scss";
 @import "~open-iconic/font/css/open-iconic-bootstrap.scss";
 @import "~animate.css/animate.css";
 
@@ -147,3 +147,8 @@ html, body {
 @import "~@essiq/brand/scss/typography";
 @import "~@essiq/brand/scss/essiq";
 @import "essiq";
+
+.btn.close {
+    @extend .btn;
+    font-size: 20px;
+}

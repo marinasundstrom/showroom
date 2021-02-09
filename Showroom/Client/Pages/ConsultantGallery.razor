@@ -100,7 +100,9 @@
 
                 @if (consultants.Any() && consultants.Count() < total) 
                 {
-                    <button class="btn btn-secondary mx-auto" @onclick="LoadMore">Load more</button>
+                        <div class="col text-center">
+                            <button class="btn btn-secondary btn-block mx-auto" @onclick="LoadMore">Load more</button>
+                        </div>
                 }
             </div>
         </div>
