@@ -13,59 +13,10 @@
   </PropertyGroup>  
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.8.0-beta">
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.2.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include=".npmignore" />
-    <Content Include="LICENSE">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="CHANGELOG" />
-    <Content Include="NOTICE" />
-    <Content Include="README" />
-    <Content Include="scripts\index.ts">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="webpack.config.js" />
-    <Content Include="fonts\fonts.scss" />
-    <Content Include="fonts\Futura-Bold.ttf" />
-    <Content Include="fonts\Futura-CondensedExtraBold.ttf" />
-    <Content Include="fonts\Futura-CondensedMedium.ttf" />
-    <Content Include="fonts\Futura-Medium.ttf" />
-    <Content Include="fonts\Futura-MediumItalic.ttf" />
-    <Content Include="fonts\SanFranciscoText-Bold.otf" />
-    <Content Include="fonts\SanFranciscoText-BoldItalic.otf" />
-    <Content Include="fonts\SanFranciscoText-Heavy.otf" />
-    <Content Include="fonts\SanFranciscoText-HeavyItalic.otf" />
-    <Content Include="fonts\SanFranciscoText-Light.otf" />
-    <Content Include="fonts\SanFranciscoText-LightItalic.otf" />
-    <Content Include="fonts\SanFranciscoText-Medium.otf" />
-    <Content Include="fonts\SanFranciscoText-MediumItalic.otf" />
-    <Content Include="fonts\SanFranciscoText-Regular.otf" />
-    <Content Include="fonts\SanFranciscoText-RegularItalic.otf" />
-    <Content Include="fonts\SanFranciscoText-Semibold.otf" />
-    <Content Include="fonts\SanFranciscoText-SemiboldItalic.otf" />
-    <Content Include="images\Essiq-Neg-Logo.png" />
-    <Content Include="images\Essiq-Pos-Logo.png" />
-    <Content Include="scss\buttons.scss" />
-    <Content Include="scss\colors.scss" />
-    <Content Include="scss\scss" />
-    <Content Include="scss\mixins.scss" />
-    <Content Include="scss\typography.scss" />
-    <Content Include="tsconfig.json" />
-    <Content Include="package.json" />
-    <Content Include="README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="fonts\" />
-    <Folder Include="images\" />
-    <Folder Include="scripts\" />
-    <Folder Include="scss\" />
   </ItemGroup>
 
   <ItemGroup>
