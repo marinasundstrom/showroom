@@ -12,6 +12,7 @@
     <Folder Include="Common\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Configuration\" />
+    <Folder Include="Consultants\Commands\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

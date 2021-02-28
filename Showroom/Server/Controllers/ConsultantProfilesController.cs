@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Showroom.Application.Consultants.Commands;
+using Showroom.Application.Consultants.Queries;
 using Showroom.Application.Dtos;
 using Showroom.Application.Services;
 using Showroom.Domain.Exceptions;
@@ -18,18 +21,18 @@ namespace Showroom.Server.Controllers
     [Authorize]
     public class ConsultantProfilesController : ControllerBase
     {
+        private readonly IMediator mediator;
         private readonly IProfileVideoService profileVideoService;
         private readonly IProfileImageService profileImageService;
-        private readonly ConsultantManager consultantManager;
 
         public ConsultantProfilesController(
+            IMediator mediator,
             IProfileVideoService profileVideoService,
-            IProfileImageService profileImageService,
-            ConsultantManager consultantManager)
+            IProfileImageService profileImageService)
         {
+            this.mediator = mediator;
             this.profileVideoService = profileVideoService;
             this.profileImageService = profileImageService;
-            this.consultantManager = consultantManager;
         }
 
         // GET: api/ConsultantProfiles
@@ -38,7 +41,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                return Ok(await consultantManager.GetConsultantProfilesAsync(organizationId, competenceAreaId, availableFrom, justMyOrganization, pageNumber, pageSize));
+                return Ok(await mediator.Send(new GetConsultantProfilesQuery(organizationId, competenceAreaId, availableFrom, justMyOrganization, pageNumber, pageSize)));
             }
             catch (NotFoundException exc)
             {
@@ -55,7 +58,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                return Ok(await consultantManager.GetConsultantProfileAsync(id));
+                return Ok(await mediator.Send(new GetConsultantProfileQuery(id)));
             }
             catch (NotFoundException exc)
             {
@@ -81,7 +84,7 @@ namespace Showroom.Server.Controllers
 
             try
             {
-                var dto2 = await consultantManager.UpdateConsultantProfileAsync(dto);
+                var dto2 = await mediator.Send(new UpdateConsultantProfileCommand(dto));
 
                 return Ok(dto2);
             }
@@ -102,7 +105,8 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                var consultantProfile = await consultantManager.CreateConsultantProfileAsync(dto);
+                var consultantProfile = await mediator.Send(new CreateConsultantProfileCommand(dto));
+
                 return CreatedAtAction("GetConsultantProfile", new { id = consultantProfile.Id }, consultantProfile);
             }
             catch (NotFoundException exc)
@@ -121,7 +125,8 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                await consultantManager.DeleteConsultantProfileAsync(id);
+                await mediator.Send(new DeleteConsultantProfileCommand(id));
+
                 return Ok();
             }
             catch (NotFoundException exc)

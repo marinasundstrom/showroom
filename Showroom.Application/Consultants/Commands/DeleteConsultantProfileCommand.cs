@@ -1,35 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Interfaces;
 using Showroom.Application.Dtos;
 using Showroom.Application.Services;
 using Showroom.Domain.Entities;
 using Showroom.Domain.Exceptions;
 
-namespace Showroom.Application.Consultants.Queries
+namespace Showroom.Application.Consultants.Commands
 {
-    public class GetConsultantProfileQuery : IRequest<ConsultantProfileDto>
+    public class DeleteConsultantProfileCommand : IRequest
     {
-        public GetConsultantProfileQuery(Guid id)
+        public DeleteConsultantProfileCommand(Guid id)
         {
             Id = id;
         }
 
         public Guid Id { get; }
 
-        class GetConsultantProfileQueryHandler : IRequestHandler<GetConsultantProfileQuery, ConsultantProfileDto>
+        class DeleteConsultantProfileCommandHandler : IRequestHandler<DeleteConsultantProfileCommand>
         {
             private readonly IApplicationDbContext _context;
             private readonly IMapper mapper;
             private readonly IIdentityService identityService;
 
-            public GetConsultantProfileQueryHandler(
+            public DeleteConsultantProfileCommandHandler(
                 IApplicationDbContext context,
                 IMapper mapper,
                 IIdentityService identityService)
@@ -39,21 +36,18 @@ namespace Showroom.Application.Consultants.Queries
                 this.identityService = identityService;
             }
 
-            public async Task<ConsultantProfileDto> Handle(GetConsultantProfileQuery request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteConsultantProfileCommand request, CancellationToken cancellationToken)
             {
-                var consultantProfile = await _context
-                   .ConsultantProfiles
-                   .Include(x => x.Organization)
-                   .Include(c => c.CompetenceArea)
-                   .Include(c => c.Manager)
-                   .FirstAsync(c => c.Id == request.Id);
-
+                var consultantProfile = await _context.ConsultantProfiles.FindAsync(request.Id);
                 if (consultantProfile == null)
                 {
                     throw new NotFoundException(nameof(ConsultantProfile), request.Id);
                 }
 
-                return mapper.Map<ConsultantProfileDto>(consultantProfile);
+                _context.ConsultantProfiles.Remove(consultantProfile);
+                await _context.SaveChangesAsync();
+
+                return Unit.Value;
             }
         }
     }

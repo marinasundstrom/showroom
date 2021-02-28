@@ -32,8 +32,6 @@ namespace Showroom.Application
 
             services.AddScoped<ClientManager>();
 
-            services.AddScoped<ConsultantManager>();
-
             services.AddScoped<ManagerManager>();
 
             services.AddScoped<IProfileImageService, ProfileImageService>();
