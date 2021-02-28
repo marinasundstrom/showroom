@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using Showroom.Server.Data;
-using Showroom.Server.Dtos;
+using Showroom.Infrastructure.Persistence;
+using Showroom.Application.Dtos;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

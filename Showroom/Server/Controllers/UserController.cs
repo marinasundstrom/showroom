@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using Showroom.Server.Data;
-using Showroom.Server.Dtos;
-using Showroom.Server.Models;
-using Showroom.Server.Services;
+using Showroom.Infrastructure.Persistence;
+using Showroom.Application.Dtos;
+using Showroom.Domain.Entities;
+using Showroom.Application.Services;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

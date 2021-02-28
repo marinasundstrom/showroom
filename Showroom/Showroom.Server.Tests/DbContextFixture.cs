@@ -1,4 +1,4 @@
-﻿using Showroom.Server.Data;
+﻿using Showroom.Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 

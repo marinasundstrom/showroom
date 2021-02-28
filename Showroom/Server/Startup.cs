@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using Showroom.Server.Configuration;
-using Showroom.Server.Data;
-using Showroom.Server.Models;
-using Showroom.Server.Services;
+using Showroom.Infrastructure.Persistence;
+using Showroom.Domain.Entities;
+using Showroom.Application.Services;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +25,10 @@ using NJsonSchema;
 
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using Showroom.Server.Services;
+using Showroom.Application;
+using Showroom.Application.Configuration;
+using Showroom.Infrastructure;
 
 namespace Showroom.Server
 {
@@ -47,6 +50,9 @@ namespace Showroom.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication(Configuration);
+            services.AddInfrastructure(Configuration);
+
             services.AddControllers()
                     .AddNewtonsoftJson();
 
@@ -127,39 +133,7 @@ namespace Showroom.Server
 
             services.AddTransient<IJwtTokenService, JwtTokenService>();
 
-            services.AddScoped<IImageService, ImageService>();
-
-            services.AddScoped<IImageResizer, ImageResizer>();
-
-            services.AddScoped<IVideoStreamService, VideoStreamService>();
-
-            services.AddScoped<IImageUploader, ImageUploader>();
-
-            services.AddScoped<IVideoUploader, VideoUploader>();
-
-            services.AddScoped<IEmailSender, EmailSender>();
-
             services.Configure<AuthMessageSenderOptions>(Configuration);
-
-            services.AddScoped<ClientManager>();
-
-            services.AddScoped<ConsultantManager>();
-
-            services.AddScoped<ManagerManager>();
-
-            services.AddScoped<IProfileImageService, ProfileImageService>();
-
-            services.AddScoped<IProfileVideoService, ProfileVideoService>();
-
-            services.AddScoped<RecommendationService>();
-
-            services.AddScoped<InterestsService>();
-
-            services.AddAutoMapper((serviceProvider, automapper) =>
-            {
-                //automapper.UseEntityFrameworkCoreModel<ApplicationDbContext>(serviceProvider);
-            },
-            typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

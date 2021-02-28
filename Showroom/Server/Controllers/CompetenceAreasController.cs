@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using Showroom.Server.Data;
-using Showroom.Server.Dtos;
-using Showroom.Server.Models;
+using Showroom.Infrastructure.Persistence;
+using Showroom.Application.Dtos;
+using Showroom.Domain.Entities;
 using Showroom.Shared;
 
 using Microsoft.AspNetCore.Authorization;

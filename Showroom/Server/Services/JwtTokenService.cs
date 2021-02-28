@@ -4,11 +4,12 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-using Showroom.Server.Configuration;
-using Showroom.Server.Models;
+using Showroom.Application.Configuration;
+using Showroom.Domain.Entities;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Showroom.Application.Services;
 
 namespace Showroom.Server.Services
 {

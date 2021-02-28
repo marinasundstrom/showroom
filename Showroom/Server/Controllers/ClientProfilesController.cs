@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Showroom.Server.Dtos;
-using Showroom.Server.Services;
+using Showroom.Application.Dtos;
+using Showroom.Application.Services;
 using Showroom.Shared;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Showroom.Domain.Exceptions;
 
 namespace Showroom.Server.Controllers
 {

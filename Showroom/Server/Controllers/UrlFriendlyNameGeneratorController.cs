@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Showroom.Server.Data;
-using Showroom.Server.Services;
+using Showroom.Infrastructure.Persistence;
+using Showroom.Application.Services;
 
 using Microsoft.AspNetCore.Mvc;
 

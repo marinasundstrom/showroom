@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using Showroom.Server.Data;
+using Showroom.Infrastructure.Persistence;
 
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;

@@ -1,10 +1,11 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 
-using Showroom.Server.Models;
+using Showroom.Domain.Entities;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Showroom.Application.Services;
 
 namespace Showroom.Server.Services
 {
