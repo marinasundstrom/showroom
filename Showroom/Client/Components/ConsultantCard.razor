@@ -1,31 +1,14 @@
 ﻿@using Showroom.Server.Client
 
-<div class="card mb-4 box-shadow" @attributes="AdditionalAttributes">
-    @*@if (consultant.ProfileVideo != null)
-        {
-            <video class="card-img-top" controls>
-                <source src="@consultant.ProfileVideo" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        }
-        else*@
-    @if (!string.IsNullOrEmpty(Consultant.ProfileImage))
-    {
-        <img class="card-img-top" src="@Consultant.ProfileImage" alt="Card image cap">
-    }
-    else
-    {
-        <img class="card-img-top placeholder" height="250" />
-    }
-    <div class="card-body">
-        <h5 class="card-title">
+<a href="@Href" style="text-decoration: none; color: black">
+    <div class="container text-center">
+        <div class="img-circle" style="background-image: url('@Consultant.ProfileImage')" />
+        <h2 class="jumbotron-heading" style="text-transform: uppercase; font-size: 24pt">
             <NameDisplay FirstName="@Consultant.FirstName" LastName="@Consultant.LastName" DisplayName="@Consultant.DisplayName" />
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">@Consultant.Headline</h6>
-        @*<p class="card-text">@consultant.Location</p>*@
-        <a href="@Href" class="card-link float-right">View</a>
+        </h2>
+        <p class="lead text-muted">@Consultant.Headline</p>
     </div>
-</div>
+</a>
 
 @code {
     [Parameter]

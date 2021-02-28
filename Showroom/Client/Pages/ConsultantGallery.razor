@@ -93,7 +93,7 @@
             <div class="row">
                 @foreach (var consultant in consultants)
                 {
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-4">
                         <ConsultantCard class="card mb-4 box-shadow animated fadeIn faster" Consultant="@consultant" Href="@($"/consultants/{consultant.Id}")" />
                     </div>
                 }
