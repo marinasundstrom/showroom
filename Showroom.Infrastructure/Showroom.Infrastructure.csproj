@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Persistence\" />
-    <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.3" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Showroom.Domain.Entities
@@ -21,5 +22,7 @@ namespace Showroom.Domain.Entities
         public Guid ManagerId { get; set; }
 
         public DateTime? AvailableFromDate { get; set; }
+
+        public ICollection<ConsultantRecommendation> ConsultantRecommendations { get; set; }
     }
 }

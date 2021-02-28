@@ -14,6 +14,14 @@ namespace Showroom.Domain.Entities
 
         public ICollection<ManagerCompetenceArea> ManagerCompetenceAreas { get; set; }
 
+        public ICollection<ConsultantProfile> ConsultantProfiles { get; set; }
+
+        public ICollection<ClientProfile> ClientProfiles { get; set; }
+
+        public ICollection<ClientCase> ClientCases { get; set; }
+
+        public ICollection<ConsultantRecommendation> Recommendations { get; set; }
+
         [NotMapped]
         public IEnumerable<CompetenceArea> CompetenceAreas2 => ManagerCompetenceAreas?.Select(x => x.CompetenceArea);
     }

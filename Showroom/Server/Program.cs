@@ -23,16 +23,9 @@ namespace Showroom.Server
                 {
                     var context = sp.GetService<ApplicationDbContext>();
 
+                    await context.Database.EnsureDeletedAsync();
+
                     await context.Database.EnsureCreatedAsync();
-
-                    try
-                    {
-                        await context.Database.MigrateAsync();
-                    }
-                    catch
-                    {
-
-                    }
 
                     await DataSeeder.CreateRolesAndAdminUser(sp, context);
                     DataSeeder.SeedCompetenceAreas(context);

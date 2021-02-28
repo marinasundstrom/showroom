@@ -52,9 +52,7 @@ namespace Showroom.Server
                     .AddNewtonsoftJson();
 
             services.AddDbContext<ApplicationDbContext>
-                (options => _ = env.IsDevelopment() ?
-                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
-                        : options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                (options => _ = options.UseSqlServer(Configuration.GetConnectionString("mssql")));
 
             services.AddIdentityCore<User>(options =>
             {

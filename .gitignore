@@ -343,3 +343,4 @@ dist
 mydb.db
 .DS_Store
 Showroom/Client/wwwroot/dist
+.tye

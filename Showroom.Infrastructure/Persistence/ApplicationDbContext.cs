@@ -23,6 +23,51 @@ namespace Showroom.Infrastructure.Persistence
 #endif
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<ManagerProfile>()
+                .HasMany(x => x.ConsultantProfiles)
+                .WithOne(x => x.Manager)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ManagerProfile>()
+               .HasMany(x => x.ClientProfiles)
+               .WithOne(x => x.Reference)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ManagerProfile>()
+               .HasMany(x => x.ClientCases)
+               .WithOne(x => x.Manager)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ManagerProfile>()
+               .HasMany(x => x.Recommendations)
+               .WithOne(x => x.Manager)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ManagerProfile>()
+                .HasMany(x => x.ManagerCompetenceAreas)
+                .WithOne(x => x.Manager)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ClientProfile>()
+               .HasMany(x => x.Interests)
+               .WithOne(x => x.Client)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ManagerCompetenceArea>()
+                .HasOne(x => x.Manager)
+                .WithMany(x => x.ManagerCompetenceAreas)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ConsultantRecommendation>()
+                 .HasOne(x => x.Consultant)
+                 .WithMany(x => x.ConsultantRecommendations)
+                 .OnDelete(DeleteBehavior.NoAction);
+        }
+
         public DbSet<Organization> Organizations { get; set; }
 
         public DbSet<CompetenceArea> CompetenceAreas { get; set; }
