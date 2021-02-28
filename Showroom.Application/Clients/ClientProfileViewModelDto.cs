@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Showroom.Application.Common.Dtos;
 
-namespace Showroom.Application.Common.Dtos
+namespace Showroom.Application.Clients
 {
     [KnownType(typeof(AddClientProfileDto))]
     [KnownType(typeof(UpdateClientProfileDto))]

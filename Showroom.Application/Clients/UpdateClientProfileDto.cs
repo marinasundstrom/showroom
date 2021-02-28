@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Showroom.Application.Common.Dtos
+namespace Showroom.Application.Clients
 {
 
     public class UpdateClientProfileDto : ClientProfileViewModelDto

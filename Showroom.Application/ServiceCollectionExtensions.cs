@@ -30,8 +30,6 @@ namespace Showroom.Application
 
             services.AddScoped<IEmailSender, EmailSender>();
 
-            services.AddScoped<ClientManager>();
-
             services.AddScoped<ManagerManager>();
 
             services.AddScoped<IProfileImageService, ProfileImageService>();

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Showroom.Application.Clients;
 using Showroom.Application.Common.Dtos;
 using Showroom.Application.Consultants;
 using Showroom.Application.Services;

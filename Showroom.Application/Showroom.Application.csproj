@@ -13,6 +13,7 @@
     <Folder Include="Configuration\" />
     <Folder Include="Consultants\Commands\" />
     <Folder Include="Common\Dtos\" />
+    <Folder Include="Clients\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

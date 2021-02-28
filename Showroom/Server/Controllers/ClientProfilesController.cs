@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Showroom.Application.Clients;
+using Showroom.Application.Clients.Commands;
+using Showroom.Application.Clients.Queries;
 using Showroom.Application.Common.Dtos;
 using Showroom.Application.Services;
 using Showroom.Domain.Exceptions;
@@ -16,11 +20,11 @@ namespace Showroom.Server.Controllers
     [Authorize(Roles = RoleConstants.AdministratorAndManager)]
     public class ClientProfilesController : ControllerBase
     {
-        private readonly ClientManager clientManager;
+        private readonly IMediator mediator;
 
-        public ClientProfilesController(ClientManager clientManager)
+        public ClientProfilesController(IMediator mediator)
         {
-            this.clientManager = clientManager;
+            this.mediator = mediator;
         }
 
         // GET: api/ClientProfiles
@@ -29,7 +33,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                return Ok(await clientManager.GetClientProfilesAsync(organizationId));
+                return Ok(await mediator.Send(new GetClientProfilesQuery(organizationId)));
             }
             catch (NotFoundException exc)
             {
@@ -46,7 +50,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                return Ok(await clientManager.GetClientProfileAsync(id));
+                return Ok(await mediator.Send(new GetClientProfileQuery(id)));
             }
             catch (NotFoundException exc)
             {
@@ -71,7 +75,7 @@ namespace Showroom.Server.Controllers
             }
             try
             {
-                var dto2 = await clientManager.UpdateClientProfileAsync(dto);
+                var dto2 = await mediator.Send(new UpdateClientProfileCommand(dto));
 
                 return Ok(dto2);
             }
@@ -91,7 +95,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                var clientProfile = await clientManager.CreateClientProfileAsync(dto);
+                var clientProfile = await mediator.Send(new CreateClientProfileCommand(dto));
                 return CreatedAtAction("GetClientProfile", new { id = clientProfile.Id }, clientProfile);
             }
             catch (NotFoundException exc)
@@ -109,7 +113,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                await clientManager.DeleteClientProfileAsync(id);
+                await mediator.Send(new DeleteClientProfileCommand(id));
                 return Ok();
             }
             catch (NotFoundException exc)
@@ -121,7 +125,7 @@ namespace Showroom.Server.Controllers
         [HttpPost("InviteClient")]
         public async Task InviteClient(Guid clientId)
         {
-            await clientManager.InviteClientAsync(clientId);
+            await mediator.Send(new InviteClientCommand(clientId));
         }
     }
 }

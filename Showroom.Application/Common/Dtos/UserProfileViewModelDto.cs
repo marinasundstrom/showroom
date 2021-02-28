@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 using NJsonSchema.Converters;
+using Showroom.Application.Clients;
 using Showroom.Application.Consultants;
 
 namespace Showroom.Application.Common.Dtos

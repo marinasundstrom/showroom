@@ -1,4 +1,5 @@
 ﻿
+using Showroom.Application.Clients;
 using Showroom.Application.Consultants;
 using Showroom.Domain.Entities;
 

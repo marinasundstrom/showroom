@@ -1,4 +1,6 @@
-﻿namespace Showroom.Application.Common.Dtos
+﻿using Showroom.Application.Common.Dtos;
+
+namespace Showroom.Application.Clients
 {
     public class ClientProfileDto : UserProfileDto
     {
