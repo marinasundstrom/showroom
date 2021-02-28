@@ -59,7 +59,11 @@ The names of clients and their work positions are entirely made up.
 * Node.js 15.8.0 (or later)
 * Visual Studio 2019 (or later)
 
-## Instructions
+#### Recommended
+* Docker
+* Project Tye
+
+### Build instructions
 
 Install the required tools.
 
@@ -79,4 +83,14 @@ Build the solution:
 
 ```
 dotnet build
+```
+
+### Using Tye
+
+Make sure that Docker Desktop is running.
+
+Run this when in the root directory (where the tye.yaml is situated):
+
+```
+tye run
 ```
