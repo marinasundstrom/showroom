@@ -1,6 +1,7 @@
 ﻿
 using Showroom.Application.Clients;
 using Showroom.Application.Consultants;
+using Showroom.Application.Managers;
 using Showroom.Domain.Entities;
 
 namespace Showroom.Application.Common.Dtos

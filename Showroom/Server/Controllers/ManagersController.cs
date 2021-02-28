@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Showroom.Application.Common.Dtos;
+using Showroom.Application.Managers;
+using Showroom.Application.Managers.Commands;
+using Showroom.Application.Managers.Queries;
 using Showroom.Application.Services;
 using Showroom.Domain.Exceptions;
 using Showroom.Shared;
@@ -18,12 +22,12 @@ namespace Showroom.Server.Controllers
     [Authorize]
     public class ManagersController : ControllerBase
     {
-        private readonly ManagerManager managerManager;
+        private readonly IMediator mediator;
         private readonly IProfileImageService profileImageService;
 
-        public ManagersController(ManagerManager managerManager, IProfileImageService profileImageService)
+        public ManagersController(IMediator mediator, IProfileImageService profileImageService)
         {
-            this.managerManager = managerManager;
+            this.mediator = mediator;
             this.profileImageService = profileImageService;
         }
 
@@ -33,7 +37,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                return Ok(await managerManager.GetManagerProfilesAsync(organizationId));
+                return Ok(await mediator.Send(new GetManagerProfilesQuery(organizationId)));
             }
             catch (NotFoundException exc)
             {
@@ -50,7 +54,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                return Ok(await managerManager.GetManagerProfileAsync(id));
+                return Ok(await mediator.Send(new GetManagerProfileQuery(id)));
             }
             catch (NotFoundException exc)
             {
@@ -77,7 +81,7 @@ namespace Showroom.Server.Controllers
             try
             {
 
-                var dto2 = await managerManager.UpdateManagerProfileAsync(dto);
+                var dto2 = await mediator.Send(new UpdateManagerProfileCommand(dto));
 
                 return Ok(dto2);
             }
@@ -98,7 +102,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                var managerProfile = await managerManager.CreateManagerProfileAsync(dto);
+                var managerProfile = await mediator.Send(new CreateManagerProfileCommand(dto));
                 return CreatedAtAction("GetManagerProfile", new { id = managerProfile.Id }, managerProfile);
             }
             catch (NotFoundException exc)
@@ -117,7 +121,7 @@ namespace Showroom.Server.Controllers
         {
             try
             {
-                await managerManager.DeleteManagerProfileAsync(id);
+                await mediator.Send(new DeleteManagerProfileCommand(id));
                 return Ok();
             }
             catch (NotFoundException exc)

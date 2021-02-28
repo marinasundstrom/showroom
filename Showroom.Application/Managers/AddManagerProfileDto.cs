@@ -1,4 +1,4 @@
-﻿namespace Showroom.Application.Common.Dtos
+﻿namespace Showroom.Application.Managers
 {
     public class AddManagerProfileDto : ManagerProfileViewModelDto
     {

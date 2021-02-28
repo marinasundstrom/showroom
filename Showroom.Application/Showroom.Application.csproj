@@ -14,6 +14,7 @@
     <Folder Include="Consultants\Commands\" />
     <Folder Include="Common\Dtos\" />
     <Folder Include="Clients\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

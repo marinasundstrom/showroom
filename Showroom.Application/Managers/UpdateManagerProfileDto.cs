@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Showroom.Application.Common.Dtos
+namespace Showroom.Application.Managers
 {
 
     public class UpdateManagerProfileDto : ManagerProfileViewModelDto

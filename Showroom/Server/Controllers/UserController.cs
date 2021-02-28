@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Clients;
 using Showroom.Application.Common.Dtos;
 using Showroom.Application.Consultants;
+using Showroom.Application.Managers;
 using Showroom.Application.Services;
 using Showroom.Domain.Entities;
 using Showroom.Infrastructure.Persistence;

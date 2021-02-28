@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Showroom.Application.Common.Dtos;
 
-namespace Showroom.Application.Common.Dtos
+namespace Showroom.Application.Managers
 {
     [KnownType(typeof(AddManagerProfileDto))]
     [KnownType(typeof(UpdateManagerProfileDto))]

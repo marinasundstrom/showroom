@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Showroom.Application.Common.Dtos;
 
-namespace Showroom.Application.Common.Dtos
+namespace Showroom.Application.Managers
 {
     public class ManagerProfileDto : UserProfileDto
     {

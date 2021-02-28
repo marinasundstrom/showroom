@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NJsonSchema.Converters;
 using Showroom.Application.Clients;
 using Showroom.Application.Consultants;
+using Showroom.Application.Managers;
 
 namespace Showroom.Application.Common.Dtos
 {
