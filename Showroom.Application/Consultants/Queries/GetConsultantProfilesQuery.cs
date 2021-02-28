@@ -7,7 +7,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Interfaces;
-using Showroom.Application.Dtos;
+using Showroom.Application.Common.Dtos;
 using Showroom.Application.Services;
 using Showroom.Domain.Entities;
 using Showroom.Domain.Exceptions;

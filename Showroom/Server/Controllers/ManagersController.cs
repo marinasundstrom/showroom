@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Showroom.Application.Dtos;
+using Showroom.Application.Common.Dtos;
 using Showroom.Application.Services;
 using Showroom.Domain.Exceptions;
 using Showroom.Shared;

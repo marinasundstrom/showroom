@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Interfaces;
-using Showroom.Application.Dtos;
+using Showroom.Application.Common.Dtos;
 using Showroom.Domain.Entities;
 using Showroom.Domain.Exceptions;
 

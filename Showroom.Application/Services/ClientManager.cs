@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PasswordGenerator;
 using Showroom.Application.Common.Interfaces;
-using Showroom.Application.Dtos;
+using Showroom.Application.Common.Dtos;
 using Showroom.Domain.Entities;
 using Showroom.Domain.Exceptions;
 using Showroom.Shared;

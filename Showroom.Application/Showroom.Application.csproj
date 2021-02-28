@@ -7,12 +7,12 @@
   <ItemGroup>
     <Folder Include="Consultants\" />
     <Folder Include="Consultants\Queries\" />
-    <Folder Include="Dtos\" />
     <Folder Include="Services\" />
     <Folder Include="Common\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Configuration\" />
     <Folder Include="Consultants\Commands\" />
+    <Folder Include="Common\Dtos\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
