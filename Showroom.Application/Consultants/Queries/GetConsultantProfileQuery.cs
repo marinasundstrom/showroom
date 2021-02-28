@@ -14,32 +14,22 @@ using Showroom.Domain.Exceptions;
 
 namespace Showroom.Application.Consultants.Queries
 {
-    public class GetConsultantProfilesQuery : IRequest<IEnumerable<ConsultantProfileDto>>
+    public class GetConsultantProfileQuery : IRequest<ConsultantProfileDto>
     {
-        public GetConsultantProfilesQuery(string organizationId = null, string competenceAreaId = null, DateTime? availableFrom = null, bool justMyOrganization = false, int pageNumber = 0, int pageSize = 10)
+        public GetConsultantProfileQuery(Guid id)
         {
-            OrganizationId = organizationId;
-            CompetenceAreaId = competenceAreaId;
-            AvailableFrom = availableFrom;
-            JustMyOrganization = justMyOrganization;
-            PageNumber = pageNumber;
-            PageSize = pageSize;
+            Id = id;
         }
 
-        public string OrganizationId { get; }
-        public string CompetenceAreaId { get; }
-        public DateTime? AvailableFrom { get; private set; }
-        public bool JustMyOrganization { get; }
-        public int PageNumber { get; }
-        public int PageSize { get; }
+        public Guid Id { get; }
 
-        class GetConsultantProfilesQueryHandler : IRequestHandler<GetConsultantProfilesQuery, IEnumerable<ConsultantProfileDto>>
+        class GetConsultantProfileQueryHandler : IRequestHandler<GetConsultantProfileQuery, ConsultantProfileDto>
         {
             private readonly IApplicationDbContext _context;
             private readonly IMapper mapper;
             private readonly IIdentityService identityService;
 
-            public GetConsultantProfilesQueryHandler(
+            public GetConsultantProfileQueryHandler(
                 IApplicationDbContext context,
                 IMapper mapper,
                 IIdentityService identityService)
@@ -49,59 +39,21 @@ namespace Showroom.Application.Consultants.Queries
                 this.identityService = identityService;
             }
 
-            public async Task<IEnumerable<ConsultantProfileDto>> Handle(GetConsultantProfilesQuery request, CancellationToken cancellationToken)
+            public async Task<ConsultantProfileDto> Handle(GetConsultantProfileQuery request, CancellationToken cancellationToken)
             {
-                var user = await identityService.GetUserAsync();
+                var consultantProfile = await _context
+                   .ConsultantProfiles
+                   .Include(x => x.Organization)
+                   .Include(c => c.CompetenceArea)
+                   .Include(c => c.Manager)
+                   .FirstAsync(c => c.Id == request.Id);
 
-                await _context.Entry(user).Reference(e => e.Profile).LoadAsync();
-                if (user.Profile.OrganizationId != null)
+                if (consultantProfile == null)
                 {
-                    await _context.Entry(user.Profile).Reference(e => e.Organization).LoadAsync();
+                    throw new NotFoundException(nameof(ConsultantProfile), request.Id);
                 }
 
-                IQueryable<ConsultantProfile> result = _context
-                        .ConsultantProfiles
-                        .Include(x => x.Organization)
-                        .Include(c => c.CompetenceArea)
-                        .Include(c => c.Manager);
-
-                if (request.JustMyOrganization)
-                {
-                    if (user.Profile.OrganizationId != null)
-                    {
-                        result = result.Where(e => e.OrganizationId == user.Profile.OrganizationId || e.OrganizationId == null);
-                    }
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(request.OrganizationId))
-                    {
-                        var organization = await _context.Organizations.FindAsync(request.OrganizationId);
-                        if (organization == null)
-                        {
-                            throw new NotFoundException(nameof(Organization), request.OrganizationId);
-                        }
-
-                        result = result.Where(e => e.OrganizationId == request.OrganizationId);
-                    }
-                }
-
-                if (request.CompetenceAreaId != null)
-                {
-                    result = result.Where(e => e.CompetenceAreaId == request.CompetenceAreaId);
-                }
-
-                if (request.AvailableFrom != null)
-                {
-                    request.AvailableFrom = request.AvailableFrom?.Date;
-                    result = result.Where(e => e.AvailableFromDate == null || request.AvailableFrom >= e.AvailableFromDate);
-                }
-
-                result = result
-                    .Skip((request.PageNumber) * request.PageSize)
-                    .Take(request.PageSize);
-
-                return mapper.ProjectTo<ConsultantProfileDto>(result);
+                return mapper.Map<ConsultantProfileDto>(consultantProfile);
             }
         }
     }
