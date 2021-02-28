@@ -76,7 +76,7 @@ namespace Showroom.Application.Services
             }
 
             result = result
-                .Skip((pageNumber - 1) * pageSize)
+                .Skip((pageNumber) * pageSize)
                 .Take(pageSize);
 
             return mapper.ProjectTo<ConsultantProfileDto>(result);
