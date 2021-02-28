@@ -34,8 +34,6 @@ namespace Showroom.Application
 
             services.AddScoped<IProfileVideoService, ProfileVideoService>();
 
-            services.AddScoped<RecommendationService>();
-
             services.AddScoped<InterestsService>();
 
             return services;

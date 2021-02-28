@@ -1,4 +1,5 @@
-﻿using Showroom.Domain.Entities;
+﻿using Showroom.Application.Consultants.Commands;
+using Showroom.Domain.Entities;
 
 namespace Showroom.Application.Common.Dtos
 {

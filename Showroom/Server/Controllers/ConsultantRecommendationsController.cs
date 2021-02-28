@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Showroom.Application.Common.Dtos;
+using Showroom.Application.Consultants.Queries;
 using Showroom.Application.Services;
 using Showroom.Infrastructure.Persistence;
 using Showroom.Shared;
@@ -17,17 +19,17 @@ namespace Showroom.Server.Controllers
     //[Authorize(Roles = RoleConstants.AdministratorAndManager)]
     public class ConsultantRecommendationsController : ControllerBase
     {
-        private readonly RecommendationService recommendationService;
         private readonly ApplicationDbContext _context;
         private readonly IIdentityService identityService;
         private readonly IMapper mapper;
+        private readonly IMediator mediator;
 
-        public ConsultantRecommendationsController(RecommendationService recommendationService, ApplicationDbContext context, IIdentityService identityService, IMapper mapper)
+        public ConsultantRecommendationsController(IMediator mediator, ApplicationDbContext context, IIdentityService identityService, IMapper mapper)
         {
-            this.recommendationService = recommendationService;
             _context = context;
             this.identityService = identityService;
             this.mapper = mapper;
+            this.mediator = mediator;
         }
 
         // GET: api/ConsultantRecommendations
@@ -37,7 +39,7 @@ namespace Showroom.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IQueryable<ClientConsultantRecommendationDto>>> GetConsultantRecommendations()
         {
-            return Ok(await recommendationService.GetRecommendationsAsync());
+            return Ok(await mediator.Send(new GetRecommendationsQuery()));
         }
 
         // GET: api/ConsultantRecommendations/5
@@ -99,9 +101,9 @@ namespace Showroom.Server.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<ClientConsultantRecommendationDto>> PostConsultantRecommendation(RecommendConsultantCommand dto)
+        public async Task<ActionResult<ClientConsultantRecommendationDto>> PostConsultantRecommendation(GetRecommendationQuery dto)
         {
-            var consultantRecommendation = await recommendationService.RecommendConsultantAsync(dto);
+            var consultantRecommendation = await mediator.Send(dto);
 
             return CreatedAtAction("GetConsultantRecommendation", new { id = consultantRecommendation.Id },
                 mapper.Map<ClientConsultantRecommendationDto>(consultantRecommendation));
