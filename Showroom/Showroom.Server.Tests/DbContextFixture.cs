@@ -1,6 +1,5 @@
-﻿using Showroom.Infrastructure.Persistence;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Showroom.Infrastructure.Persistence;
 
 namespace Showroom.Server.Tests
 {

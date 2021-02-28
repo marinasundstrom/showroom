@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using AutoMapper;
-
-using Showroom.Infrastructure.Persistence;
-using Showroom.Application.Dtos;
-using Showroom.Domain.Entities;
-using Showroom.Application.Services;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Showroom.Application.Dtos;
+using Showroom.Application.Services;
+using Showroom.Domain.Entities;
+using Showroom.Infrastructure.Persistence;
 
 namespace Showroom.Server.Controllers
 {

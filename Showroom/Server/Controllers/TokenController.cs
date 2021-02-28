@@ -1,14 +1,12 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
-using Showroom.Domain.Entities;
-using Showroom.Application.Services;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Showroom.Application.Services;
+using Showroom.Domain.Entities;
 
 namespace Showroom.Server.Controllers
 {

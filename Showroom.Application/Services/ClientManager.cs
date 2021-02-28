@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AutoMapper;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PasswordGenerator;
 using Showroom.Application.Common.Interfaces;
 using Showroom.Application.Dtos;
 using Showroom.Domain.Entities;
-using Showroom.Shared;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-using PasswordGenerator;
-
-using ClientProfile = Showroom.Domain.Entities.ClientProfile;
 using Showroom.Domain.Exceptions;
+using Showroom.Shared;
+using ClientProfile = Showroom.Domain.Entities.ClientProfile;
 
 namespace Showroom.Application.Services
 {

@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Interfaces;
 using Showroom.Domain.Entities;
-
-using Microsoft.EntityFrameworkCore;
 
 namespace Showroom.Application.Services
 {

@@ -1,10 +1,8 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-
-using Showroom.Application.Services;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Showroom.Application.Services;
 
 namespace Showroom.Server.Controllers
 {

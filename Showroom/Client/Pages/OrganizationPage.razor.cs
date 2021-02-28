@@ -1,11 +1,9 @@
 ﻿
 using System;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Components;
 using Showroom.Client.Services;
 using Showroom.Server.Client;
-
-using Microsoft.AspNetCore.Components;
 
 namespace Showroom.Client.Pages
 {

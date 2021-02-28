@@ -3,13 +3,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-
-using Showroom.Application.Configuration;
-using Showroom.Domain.Entities;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Showroom.Application.Configuration;
 using Showroom.Application.Services;
+using Showroom.Domain.Entities;
 
 namespace Showroom.Server.Services
 {

@@ -1,9 +1,8 @@
 ﻿
-using Showroom.Domain.Entities;
-
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Interfaces;
+using Showroom.Domain.Entities;
 
 namespace Showroom.Infrastructure.Persistence
 {

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AutoMapper;
-
+using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Interfaces;
 using Showroom.Application.Dtos;
 using Showroom.Domain.Entities;
-
-using Microsoft.EntityFrameworkCore;
 using Showroom.Domain.Exceptions;
 
 namespace Showroom.Application.Services

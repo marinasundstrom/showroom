@@ -1,14 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-
 using AutoMapper;
-
-using Showroom.Client.Services;
-using Showroom.Server.Client;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Showroom.Client.Services;
+using Showroom.Server.Client;
 
 namespace Showroom.Client.Pages
 {

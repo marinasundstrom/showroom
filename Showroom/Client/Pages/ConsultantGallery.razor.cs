@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Components;
 using Showroom.Client.Models;
 using Showroom.Server.Client;
-
-using Microsoft.AspNetCore.Components;
 
 namespace Showroom.Client.Pages
 {

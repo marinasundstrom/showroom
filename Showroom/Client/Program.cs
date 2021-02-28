@@ -3,18 +3,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Blazored.LocalStorage;
-using Showroom.Client.Services;
-using Showroom.Client.Utils;
-using Showroom.Server.Client;
-
 using Ganss.XSS;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Polly;
 using Polly.Extensions.Http;
+using Showroom.Client.Services;
+using Showroom.Client.Utils;
+using Showroom.Server.Client;
 
 namespace Showroom.Client
 {

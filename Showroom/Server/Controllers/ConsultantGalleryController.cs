@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AutoMapper;
-
-using Showroom.Infrastructure.Persistence;
-using Showroom.Application.Dtos;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Showroom.Application.Dtos;
+using Showroom.Infrastructure.Persistence;
 
 namespace Showroom.Server.Controllers
 {

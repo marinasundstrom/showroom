@@ -3,13 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
 using AutoMapper;
-
-using Showroom.Infrastructure.Persistence;
-using Showroom.Domain.Entities;
-using Showroom.Application.Services;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,15 +14,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-
 using NJsonSchema;
-
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using Showroom.Server.Services;
 using Showroom.Application;
 using Showroom.Application.Configuration;
+using Showroom.Application.Services;
+using Showroom.Domain.Entities;
 using Showroom.Infrastructure;
+using Showroom.Infrastructure.Persistence;
+using Showroom.Server.Services;
 
 namespace Showroom.Server
 {
@@ -169,7 +164,7 @@ namespace Showroom.Server
             {
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
-            });      
+            });
         }
     }
 }

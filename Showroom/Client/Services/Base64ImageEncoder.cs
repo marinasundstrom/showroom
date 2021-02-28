@@ -8,7 +8,7 @@ namespace Showroom.Client.Services
         public static string EncodeImage(Stream stream, string type)
         {
             byte[] bytes = null;
-            if(stream is MemoryStream memoryStream)
+            if (stream is MemoryStream memoryStream)
             {
                 bytes = memoryStream.ToArray();
             }
