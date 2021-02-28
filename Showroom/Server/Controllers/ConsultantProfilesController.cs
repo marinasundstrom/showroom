@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Showroom.Application.Common.Dtos;
+using Showroom.Application.Consultants;
 using Showroom.Application.Consultants.Commands;
 using Showroom.Application.Consultants.Queries;
-using Showroom.Application.Common.Dtos;
 using Showroom.Application.Services;
 using Showroom.Domain.Exceptions;
 using Showroom.Shared;
-using Showroom.Application.Consultants;
 
 namespace Showroom.Server.Controllers
 {

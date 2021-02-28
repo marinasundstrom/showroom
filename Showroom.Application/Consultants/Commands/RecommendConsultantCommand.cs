@@ -1,15 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Showroom.Application.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Showroom.Application.Common.Dtos;
+using Showroom.Application.Common.Interfaces;
 using Showroom.Application.Services;
 using Showroom.Domain.Entities;
 using Showroom.Domain.Exceptions;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace Showroom.Application.Consultants.Commands
 {

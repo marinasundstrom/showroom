@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Showroom.Application.Common.Interfaces;
 using Showroom.Application.Common.Dtos;
+using Showroom.Application.Common.Interfaces;
 using Showroom.Domain.Entities;
 
 namespace Showroom.Application.Services

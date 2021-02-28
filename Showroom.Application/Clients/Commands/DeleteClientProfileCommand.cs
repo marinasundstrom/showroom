@@ -3,12 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Showroom.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Showroom.Application.Common.Dtos;
+using Showroom.Application.Common.Interfaces;
 using Showroom.Application.Services;
 using Showroom.Domain.Entities;
 using Showroom.Domain.Exceptions;
-using Microsoft.AspNetCore.Identity;
 
 namespace Showroom.Application.Clients.Commands
 {
